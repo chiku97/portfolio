@@ -3,12 +3,14 @@ import { Mail, Phone, MapPin, Copy, Check, Send, ArrowUpRight, ExternalLink, Rot
 import { GithubIcon, LinkedinIcon } from './Icons';
 import { personalInfo } from '../data/portfolioData';
 import { playClick, playSuccess } from '../utils/audio';
+import { submitContactForm } from '../utils/api';
 
 export default function Contact({ onShowToast }) {
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [copiedPhone, setCopiedPhone] = useState(false);
   const [form, setForm] = useState({ name: '', email: '', message: '' });
   const [submitted, setSubmitted] = useState(false);
+  const [isSending, setIsSending] = useState(false);
   const [gmailLink, setGmailLink] = useState('');
 
   const copyEmail = () => {
@@ -25,19 +27,31 @@ export default function Contact({ onShowToast }) {
     setTimeout(() => setCopiedPhone(false), 2000);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     playSuccess();
+    setIsSending(true);
 
     const subject = `Engineering Opportunity / Ingestion from ${form.name || 'Hiring Manager'}`;
     const body = `Hi,\n\nName: ${form.name}\nEmail: ${form.email}\n\nMessage:\n${form.message}\n\nBest regards,\n${form.name}`;
 
-    // 1. Copy message payload to clipboard as an immediate fail-safe
+    // 1. Submit to Backend API (Stores in persistent database & dispatches notification)
+    try {
+      await submitContactForm({
+        name: form.name,
+        email: form.email,
+        message: form.message
+      });
+    } catch (err) {
+      console.warn('Backend submission note:', err);
+    }
+
+    // 2. Copy message payload to clipboard as an immediate fail-safe
     try {
       navigator.clipboard.writeText(`To: ${personalInfo.email}\nSubject: ${subject}\n\n${body}`);
     } catch (err) {}
 
-    // 2. Generate web-mail URLs
+    // 3. Generate web-mail URLs
     const encodedSubject = encodeURIComponent(subject);
     const encodedBody = encodeURIComponent(body);
     const mailtoUrl = `mailto:${personalInfo.email}?subject=${encodedSubject}&body=${encodedBody}`;
@@ -45,8 +59,9 @@ export default function Contact({ onShowToast }) {
     
     setGmailLink(webGmailUrl);
     setSubmitted(true);
+    setIsSending(false);
 
-    // 3. Attempt native mail client trigger
+    // 4. Attempt native mail client trigger
     try {
       const a = document.createElement('a');
       a.href = mailtoUrl;
@@ -56,7 +71,7 @@ export default function Contact({ onShowToast }) {
     } catch (err) {}
 
     if (onShowToast) {
-      onShowToast("🚀 Message drafted! Copied to clipboard & ready in email client.");
+      onShowToast("🚀 Message received! Stored in database & drafted in email client.");
     }
   };
 

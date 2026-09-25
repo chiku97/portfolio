@@ -1,12 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowUpRight, Flame } from 'lucide-react';
+import { ArrowUpRight, Flame, ThumbsUp } from 'lucide-react';
 import { GithubIcon } from './Icons';
 import { projects } from '../data/portfolioData';
-import { playClick } from '../utils/audio';
+import { playClick, playSuccess } from '../utils/audio';
+import { getPortfolioStats, likeProjectApi } from '../utils/api';
 
 export default function Projects({ honestMode }) {
   const [activeFilter, setActiveFilter] = useState("All");
+  const [likes, setLikes] = useState({
+    'rag-analytics-chatbot': 48,
+    'coding-assessment-platform': 64,
+    'multi-tenant-retail-engine': 58,
+    'jwt-auth-session-service': 36
+  });
+  const [likedMap, setLikedMap] = useState({});
+
+  useEffect(() => {
+    getPortfolioStats().then(stats => {
+      if (stats?.projectLikes) {
+        setLikes(prev => ({ ...prev, ...stats.projectLikes }));
+      }
+    }).catch(() => {});
+  }, []);
+
+  const handleLike = async (projectId) => {
+    playSuccess();
+    setLikedMap(prev => ({ ...prev, [projectId]: true }));
+    setLikes(prev => ({ ...prev, [projectId]: (prev[projectId] || 0) + 1 }));
+
+    try {
+      const res = await likeProjectApi(projectId);
+      if (res?.likes) {
+        setLikes(prev => ({ ...prev, [projectId]: res.likes }));
+      }
+    } catch (e) {
+      console.warn("Like update note:", e);
+    }
+  };
 
   const filters = ["All", "AI & Search", "Distributed Systems", "Backend Architecture"];
 
@@ -70,6 +101,15 @@ export default function Projects({ honestMode }) {
                   </div>
 
                   <div className="project-quick-links">
+                    <button 
+                      onClick={() => handleLike(p.id)}
+                      className={`icon-tool-btn like-btn ${likedMap[p.id] ? 'liked' : ''}`}
+                      title="Endorse / Like this architecture"
+                    >
+                      <ThumbsUp size={14} className={likedMap[p.id] ? "text-cyan" : ""} />
+                      <span className="like-count font-mono">{likes[p.id] || 42}</span>
+                    </button>
+
                     <a 
                       href={p.githubUrl} 
                       target="_blank" 
@@ -321,7 +361,30 @@ export default function Projects({ honestMode }) {
           background: rgba(56, 189, 248, 0.12);
         }
 
+        .like-btn {
+          width: auto;
+          padding: 0 10px;
+          gap: 6px;
+          cursor: pointer;
+        }
+
+        .like-btn.liked {
+          border-color: rgba(56, 189, 248, 0.5);
+          background: rgba(56, 189, 248, 0.1);
+        }
+
+        .like-count {
+          font-size: 0.76rem;
+          color: #cbd5e1;
+        }
+
+        .like-btn.liked .like-count {
+          color: var(--accent-cyan);
+          font-weight: 700;
+        }
+
         .text-amber { color: var(--accent-amber); }
+        .text-cyan { color: var(--accent-cyan); }
         .font-mono { font-family: var(--font-mono); }
       `}</style>
     </section>

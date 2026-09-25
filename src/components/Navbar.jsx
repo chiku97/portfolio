@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  FileText, 
-  Volume2, 
-  VolumeX, 
-  Menu, 
-  X, 
-  Coffee, 
+import {
+  FileText,
+  Volume2,
+  VolumeX,
+  Menu,
+  X,
+  Coffee,
   Briefcase,
   ArrowUpRight,
   Sparkles,
@@ -18,14 +18,14 @@ import confetti from 'canvas-confetti';
 import { personalInfo } from '../data/portfolioData';
 import { playClick, toggleSound, playSuccess } from '../utils/audio';
 
-export default function Navbar({ 
-  honestMode, 
-  setHonestMode, 
-  onOpenResume, 
+export default function Navbar({
+  honestMode,
+  setHonestMode,
+  onOpenResume,
   onOpenWalkthrough,
   onOpenCommandPalette,
   onOpenAiAssistant,
-  onShowToast 
+  onShowToast
 }) {
   const [scrolled, setScrolled] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -96,21 +96,21 @@ export default function Navbar({
 
   return (
     <header className="nav-fixed-container">
-      <motion.div 
+      <motion.div
         className={`nav-dock ${scrolled ? 'nav-dock-scrolled' : ''}`}
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
       >
         {/* Scroll Progress Hairline Indicator */}
-        <div 
+        <div
           className="nav-scroll-progress-line"
           style={{ width: `${scrollProgress}%` }}
         />
 
         {/* Left: Brand Monogram & Status */}
-        <a 
-          href="#" 
+        <a
+          href="#"
           className="brand-pill"
           onClick={(e) => { playClick(); }}
           title="Uttam Kumar Mahto • Scroll to top"
@@ -128,7 +128,7 @@ export default function Navbar({
         <div className="dock-separator"></div>
 
         {/* Center: Interactive Nav Items with Spring Pill Glider */}
-        <nav 
+        <nav
           className="nav-items-track"
           onMouseLeave={() => setHoveredNav(null)}
         >
@@ -152,10 +152,10 @@ export default function Navbar({
                     transition={{ type: "spring", stiffness: 400, damping: 30 }}
                   />
                 )}
-                
+
                 {/* Active Section Dot */}
                 {isActive && !isHovered && (
-                  <motion.span 
+                  <motion.span
                     layoutId="activeDot"
                     className="nav-active-pip"
                     transition={{ type: "spring", stiffness: 350, damping: 25 }}
@@ -180,8 +180,8 @@ export default function Navbar({
               title="Recruiter Safe Mode: Professional sanitized resume view"
             >
               {!honestMode && (
-                <motion.div 
-                  layoutId="tonePill" 
+                <motion.div
+                  layoutId="tonePill"
                   className="tone-thumb-pill"
                   transition={{ type: "spring", stiffness: 450, damping: 35 }}
                 />
@@ -196,8 +196,8 @@ export default function Navbar({
               title="Honest Dev Mode: Real engineering truths and unfiltered insights"
             >
               {honestMode && (
-                <motion.div 
-                  layoutId="tonePill" 
+                <motion.div
+                  layoutId="tonePill"
                   className="tone-thumb-pill"
                   transition={{ type: "spring", stiffness: 450, damping: 35 }}
                 />
@@ -223,7 +223,7 @@ export default function Navbar({
             id="nav-ai-btn"
             onClick={() => { playClick(); onOpenAiAssistant && onOpenAiAssistant(); }}
             className="btn-dock-ai font-mono"
-            title="Chat with Chiku AI (Interactive Technical Recruiter Copilot)"
+            title="Chat with Uttam's AI (Interactive Technical Recruiter Copilot)"
           >
             <Bot size={12} className="text-cyan" />
             <span className="ai-label">Ask AI</span>
@@ -241,9 +241,9 @@ export default function Navbar({
           </button>
 
           {/* Sound Equalizer Visualizer */}
-          <button 
-            onClick={handleToggleSound} 
-            className="btn-dock-audio" 
+          <button
+            onClick={handleToggleSound}
+            className="btn-dock-audio"
             title={soundOn ? "Mute interactive audio feedback" : "Enable interactive audio feedback"}
           >
             {soundOn ? (
@@ -258,9 +258,9 @@ export default function Navbar({
           </button>
 
           {/* Shimmer Resume Action */}
-          <button 
+          <button
             id="nav-resume-btn"
-            onClick={() => { playClick(); onOpenResume(); }} 
+            onClick={() => { playClick(); onOpenResume(); }}
             className="btn-dock-resume"
             title="Open printable resume & PDF export"
           >
@@ -269,7 +269,7 @@ export default function Navbar({
           </button>
 
           {/* Mobile Menu Trigger */}
-          <button 
+          <button
             className="btn-dock-mobile"
             onClick={() => { playClick(); setMobileMenuOpen(!mobileMenuOpen); }}
             aria-label="Toggle navigation menu"
@@ -282,7 +282,7 @@ export default function Navbar({
       {/* Mobile Drawer */}
       <AnimatePresence>
         {mobileMenuOpen && (
-          <motion.div 
+          <motion.div
             className="mobile-dock-drawer"
             initial={{ opacity: 0, y: -12, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -291,9 +291,9 @@ export default function Navbar({
           >
             <div className="mobile-links-list">
               {navItems.map((item) => (
-                <a 
-                  key={item.label} 
-                  href={item.href} 
+                <a
+                  key={item.label}
+                  href={item.href}
                   onClick={() => { playClick(); setMobileMenuOpen(false); }}
                   className="mobile-link-entry"
                 >
@@ -322,33 +322,33 @@ export default function Navbar({
               </div>
 
               <div className="mobile-extra-actions">
-                <button 
-                  onClick={() => { onOpenCommandPalette && onOpenCommandPalette(); setMobileMenuOpen(false); }} 
+                <button
+                  onClick={() => { onOpenCommandPalette && onOpenCommandPalette(); setMobileMenuOpen(false); }}
                   className="btn btn-subtle w-full justify-center font-mono"
                 >
                   <Search size={14} className="text-cyan" />
                   <span>Command Palette (⌘K)</span>
                 </button>
 
-                <button 
-                  onClick={() => { onOpenAiAssistant && onOpenAiAssistant(); setMobileMenuOpen(false); }} 
+                <button
+                  onClick={() => { onOpenAiAssistant && onOpenAiAssistant(); setMobileMenuOpen(false); }}
                   className="btn btn-subtle w-full justify-center font-mono"
                 >
                   <Bot size={14} className="text-cyan" />
-                  <span>Chat with Chiku AI</span>
+                  <span>Chat with Uttam's AI</span>
                 </button>
               </div>
 
-              <button 
-                onClick={() => { onOpenWalkthrough(); setMobileMenuOpen(false); }} 
+              <button
+                onClick={() => { onOpenWalkthrough(); setMobileMenuOpen(false); }}
                 className="btn btn-subtle w-full justify-center"
               >
                 <Sparkles size={14} className="text-amber" />
                 <span>Interactive Portfolio Tour</span>
               </button>
 
-              <button 
-                onClick={() => { onOpenResume(); setMobileMenuOpen(false); }} 
+              <button
+                onClick={() => { onOpenResume(); setMobileMenuOpen(false); }}
                 className="btn-dock-resume w-full justify-center"
               >
                 <FileText size={14} />

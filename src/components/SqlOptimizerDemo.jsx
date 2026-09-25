@@ -12,6 +12,7 @@ import {
   Check 
 } from 'lucide-react';
 import { playClick, playSuccess } from '../utils/audio';
+import { runBackendSqlExplain } from '../utils/api';
 
 export default function SqlOptimizerDemo() {
   const [isOptimized, setIsOptimized] = useState(true);
@@ -24,17 +25,26 @@ export default function SqlOptimizerDemo() {
     setRunTime(optimized ? 3.2 : 1842.6);
   };
 
-  const handleExecute = () => {
+  const handleExecute = async () => {
     playClick();
     setIsRunning(true);
-    const targetTime = isOptimized ? 3.2 : 1842.6;
-    
-    // Animate query execution
-    setTimeout(() => {
-      setIsRunning(false);
-      setRunTime(targetTime);
-      playSuccess();
-    }, isOptimized ? 300 : 1200);
+    const targetMode = isOptimized ? 'optimized' : 'naive';
+
+    try {
+      const backendRes = await runBackendSqlExplain(targetMode);
+      if (backendRes && backendRes.executionTimeMs) {
+        setRunTime(backendRes.executionTimeMs);
+      } else {
+        setRunTime(isOptimized ? 3.2 : 1842.6);
+      }
+    } catch {
+      setRunTime(isOptimized ? 3.2 : 1842.6);
+    } finally {
+      setTimeout(() => {
+        setIsRunning(false);
+        playSuccess();
+      }, isOptimized ? 250 : 800);
+    }
   };
 
   const unoptimizedSql = `-- NAIVE QUERY (Sequential Scan across 10,000,000 rows)

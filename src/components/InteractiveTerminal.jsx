@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Terminal as TerminalIcon, Sparkles, CornerDownLeft, Trash2, Zap } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { playClick, playKeypress, playSuccess, playAlarm } from '../utils/audio';
+import { recordTerminalCommandApi } from '../utils/api';
 
 export default function InteractiveTerminal({ onShowToast, onOpenFridayDeploy }) {
   const [history, setHistory] = useState([
@@ -97,6 +98,7 @@ Confetti cannon fired!`
     if (!raw) return;
 
     playKeypress();
+    recordTerminalCommandApi(raw);
     const lower = raw.toLowerCase();
     const newEntry = { type: 'user', command: raw };
     const updatedHistory = [...history, newEntry];

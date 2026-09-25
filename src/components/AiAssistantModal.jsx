@@ -1,28 +1,29 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { 
-  Bot, 
-  Send, 
-  Sparkles, 
-  X, 
-  Copy, 
-  Check, 
-  RotateCcw, 
-  Terminal, 
-  Coffee, 
-  ShieldCheck, 
-  Zap, 
+import {
+  Bot,
+  Send,
+  Sparkles,
+  X,
+  Copy,
+  Check,
+  RotateCcw,
+  Terminal,
+  Coffee,
+  ShieldCheck,
+  Zap,
   MessageSquare
 } from 'lucide-react';
 import { playClick, playSuccess, playKeypress } from '../utils/audio';
+import { sendChatMessage } from '../utils/api';
 
 export default function AiAssistantModal({ isOpen, onClose, honestMode, setHonestMode, onShowToast }) {
   const [messages, setMessages] = useState([
     {
       id: 'welcome',
       role: 'assistant',
-      text: honestMode 
-        ? "Yo! I'm Chiku AI — the unfiltered digital avatar of Uttam. Ask me anything about his architecture, his production battle scars, why he rewrote services in Go at 3 AM, or whether he's worth hiring. (Spoiler: He doesn't write spaghetti code)."
-        : "Hello! I am Chiku AI, Uttam's technical portfolio assistant. Feel free to ask about his system design, his hybrid RAG & vector pipelines at SnapBizz, enterprise backend scaling, or full-stack proficiencies."
+      text: honestMode
+        ? "Yo! I'm Uttam's AI — the unfiltered digital avatar of Uttam. Ask me anything about his architecture, his production battle scars, why he rewrote services in Go at 3 AM, or whether he's worth hiring. (Spoiler: He doesn't write spaghetti code)."
+        : "Hello! I am Uttam's AI, Uttam's technical portfolio assistant. Feel free to ask about his system design, his hybrid RAG & vector pipelines at SnapBizz, enterprise backend scaling, or full-stack proficiencies."
     }
   ]);
   const [inputVal, setInputVal] = useState('');
@@ -90,7 +91,7 @@ export default function AiAssistantModal({ isOpen, onClose, honestMode, setHones
     }
   };
 
-  const handleSend = (textToSend = inputVal) => {
+  const handleSend = async (textToSend = inputVal) => {
     const q = textToSend.trim();
     if (!q || isTyping) return;
 
@@ -100,31 +101,41 @@ export default function AiAssistantModal({ isOpen, onClose, honestMode, setHones
     setInputVal('');
     setIsTyping(true);
 
-    // Simulate LLM streaming typing latency
-    setTimeout(() => {
-      const fullResponse = getAiResponse(q);
+    try {
+      // 1. Call Backend RAG Chat Engine
+      const history = messages.slice(-4).map(m => ({ role: m.role, content: m.text }));
+      const backendRes = await sendChatMessage(q, honestMode, history);
+
+      const fullResponse = backendRes?.text || getAiResponse(q);
+      const modelName = backendRes?.model || 'Uttam AI';
       let currentLength = 0;
       const responseId = `a-${Date.now()}`;
 
-      // Insert empty response
-      setMessages(prev => [...prev, { id: responseId, role: 'assistant', text: '' }]);
+      // Insert empty response container
+      setMessages(prev => [...prev, { id: responseId, role: 'assistant', text: '', model: modelName }]);
 
       const streamTimer = setInterval(() => {
         currentLength += 4;
         if (currentLength >= fullResponse.length) {
-          setMessages(prev => 
+          setMessages(prev =>
             prev.map(m => m.id === responseId ? { ...m, text: fullResponse } : m)
           );
           setIsTyping(false);
           playSuccess();
           clearInterval(streamTimer);
         } else {
-          setMessages(prev => 
+          setMessages(prev =>
             prev.map(m => m.id === responseId ? { ...m, text: fullResponse.slice(0, currentLength) } : m)
           );
         }
       }, 16);
-    }, 400);
+    } catch {
+      const fullResponse = getAiResponse(q);
+      const responseId = `a-${Date.now()}`;
+      setMessages(prev => [...prev, { id: responseId, role: 'assistant', text: fullResponse }]);
+      setIsTyping(false);
+      playSuccess();
+    }
   };
 
   const copyMessage = (id, text) => {
@@ -145,8 +156,8 @@ export default function AiAssistantModal({ isOpen, onClose, honestMode, setHones
 
   return (
     <div className="modal-backdrop" onClick={onClose}>
-      <div 
-        className="modal-content ai-chat-modal" 
+      <div
+        className="modal-content ai-chat-modal"
         onClick={(e) => e.stopPropagation()}
         role="dialog"
         aria-modal="true"
@@ -160,7 +171,7 @@ export default function AiAssistantModal({ isOpen, onClose, honestMode, setHones
             </div>
             <div>
               <div className="ai-title-row">
-                <h3 className="ai-title">Chiku AI — Technical Recruiter Copilot</h3>
+                <h3 className="ai-title">Uttam's AI — Technical Recruiter Copilot</h3>
                 <span className="ai-model-tag font-mono">LLM SIMULATOR</span>
               </div>
               <p className="ai-subtitle font-mono">
@@ -170,7 +181,7 @@ export default function AiAssistantModal({ isOpen, onClose, honestMode, setHones
           </div>
 
           <div className="ai-header-actions">
-            <button 
+            <button
               onClick={() => {
                 playClick();
                 setHonestMode(!honestMode);
@@ -183,9 +194,9 @@ export default function AiAssistantModal({ isOpen, onClose, honestMode, setHones
               <span>{honestMode ? "Honest" : "Safe"}</span>
             </button>
 
-            <button 
-              onClick={onClose} 
-              className="modal-close-btn" 
+            <button
+              onClick={onClose}
+              className="modal-close-btn"
               aria-label="Close assistant"
               title="Close chat"
             >
@@ -225,9 +236,9 @@ export default function AiAssistantModal({ isOpen, onClose, honestMode, setHones
                 <div className={`chat-bubble ${isUser ? 'bubble-user' : 'bubble-assistant'}`}>
                   <div className="bubble-text">{m.text}</div>
                   {!isUser && m.text && (
-                    <button 
-                      onClick={() => copyMessage(m.id, m.text)} 
-                      className="bubble-copy-btn" 
+                    <button
+                      onClick={() => copyMessage(m.id, m.text)}
+                      className="bubble-copy-btn"
                       title="Copy response"
                     >
                       {copiedId === m.id ? <Check size={11} className="text-emerald" /> : <Copy size={11} />}
@@ -254,8 +265,8 @@ export default function AiAssistantModal({ isOpen, onClose, honestMode, setHones
         </div>
 
         {/* Input Bar */}
-        <form 
-          className="ai-chat-input-bar" 
+        <form
+          className="ai-chat-input-bar"
           onSubmit={(e) => {
             e.preventDefault();
             handleSend();
@@ -270,9 +281,9 @@ export default function AiAssistantModal({ isOpen, onClose, honestMode, setHones
             onChange={(e) => setInputVal(e.target.value)}
             disabled={isTyping}
           />
-          <button 
-            type="submit" 
-            className="ai-send-btn" 
+          <button
+            type="submit"
+            className="ai-send-btn"
             disabled={!inputVal.trim() || isTyping}
             aria-label="Send query"
           >
