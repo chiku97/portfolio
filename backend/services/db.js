@@ -16,9 +16,7 @@ const INITIAL_DATA = {
     'rag-analytics-chatbot': 48,
     'coding-assessment-platform': 64,
     'multi-tenant-retail-engine': 58,
-    'jwt-auth-session-service': 36,
-    'irctc-retail-rag': 42,
-    'snapbizz-retail-engine': 58
+    'jwt-auth-session-service': 36
   },
   endorsements: {
     'postgresql-indexing': 88,
@@ -114,9 +112,83 @@ async function incrementPersistentViews() {
   return (cache?.pageViews || BASELINE_VIEWS) + 1;
 }
 
+const BASELINE_PROJECT_LIKES = {
+  'rag-analytics-chatbot': 48,
+  'coding-assessment-platform': 64,
+  'multi-tenant-retail-engine': 58,
+  'jwt-auth-session-service': 36
+};
+
+function getProjectCounterKey(projectId) {
+  const sanitized = String(projectId).replace(/[^a-zA-Z0-9_-]/g, '_');
+  return `uttam_portfolio_likes_${sanitized}_chiku97`;
+}
+
+// Zero-database persistent project like reader with timeout & local fallback
+async function fetchPersistentProjectLikes(projectId) {
+  const base = BASELINE_PROJECT_LIKES[projectId] || 25;
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 2000);
+    const key = getProjectCounterKey(projectId);
+    const res = await fetch(`${COUNTER_API_BASE}/get/${key}`, { signal: controller.signal });
+    clearTimeout(timeout);
+    if (res.ok) {
+      const data = await res.json();
+      if (typeof data.value === 'number') {
+        return base + data.value;
+      }
+    }
+  } catch {
+    // Fallback gracefully
+  }
+  return cache?.projectLikes?.[projectId] || base;
+}
+
+// Zero-database persistent project like atomic increment
+async function incrementPersistentProjectLikes(projectId) {
+  const base = BASELINE_PROJECT_LIKES[projectId] || 25;
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 2000);
+    const key = getProjectCounterKey(projectId);
+    const res = await fetch(`${COUNTER_API_BASE}/hit/${key}`, { signal: controller.signal });
+    clearTimeout(timeout);
+    if (res.ok) {
+      const data = await res.json();
+      if (typeof data.value === 'number') {
+        return base + data.value;
+      }
+    }
+  } catch {
+    // Fallback gracefully
+  }
+  return (cache?.projectLikes?.[projectId] || base) + 1;
+}
+
+async function fetchAllPersistentProjectLikes() {
+  const projectIds = Array.from(new Set([
+    ...Object.keys(BASELINE_PROJECT_LIKES),
+    ...Object.keys(cache?.projectLikes || {})
+  ]));
+  try {
+    const entries = await Promise.all(
+      projectIds.map(async (id) => [id, await fetchPersistentProjectLikes(id)])
+    );
+    return Object.fromEntries(entries);
+  } catch {
+    return cache?.projectLikes || BASELINE_PROJECT_LIKES;
+  }
+}
+
 export async function getStats() {
   const db = await getDb();
-  const persistentViews = await fetchPersistentViews();
+  const [persistentViews, persistentLikes] = await Promise.all([
+    fetchPersistentViews(),
+    fetchAllPersistentProjectLikes()
+  ]);
+  db.pageViews = persistentViews;
+  db.projectLikes = { ...db.projectLikes, ...persistentLikes };
   return {
     pageViews: persistentViews,
     terminalCommandsRun: db.terminalCommandsRun,
@@ -153,15 +225,13 @@ export async function recordAiChat() {
 
 export async function likeProject(projectId) {
   const db = await getDb();
-  if (!db.projectLikes[projectId]) {
-    db.projectLikes[projectId] = 1;
-  } else {
-    db.projectLikes[projectId] += 1;
-  }
+  const newLikes = await incrementPersistentProjectLikes(projectId);
+  db.projectLikes[projectId] = newLikes;
+  db.visitorAnalytics.lastActive = new Date().toISOString();
   saveDb();
   return {
     projectId,
-    likes: db.projectLikes[projectId]
+    likes: newLikes
   };
 }
 
