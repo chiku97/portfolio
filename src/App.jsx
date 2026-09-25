@@ -15,6 +15,7 @@ import ResumeModal from './components/ResumeModal';
 import FridayDeployModal from './components/FridayDeployModal';
 import GitHubDeployGuideModal from './components/GitHubDeployGuideModal';
 import PortfolioWalkthrough from './components/PortfolioWalkthrough';
+import MobileWarningModal from './components/MobileWarningModal';
 
 export default function App() {
   const [honestMode, setHonestMode] = useState(true);
@@ -23,6 +24,23 @@ export default function App() {
   const [isFridayDeployOpen, setIsFridayDeployOpen] = useState(false);
   const [isDeployGuideOpen, setIsDeployGuideOpen] = useState(false);
   const [isWalkthroughOpen, setIsWalkthroughOpen] = useState(false);
+  const [isMobileWarningOpen, setIsMobileWarningOpen] = useState(false);
+
+  // Auto-detect mobile devices on load and display the humorous workstation recommendation modal
+  React.useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const isSmallScreen = window.innerWidth <= 768;
+    const isMobileAgent = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent || '');
+    const alreadyDismissed = sessionStorage.getItem('mobile_desktop_notice_dismissed');
+
+    if ((isSmallScreen || isMobileAgent) && !alreadyDismissed) {
+      const timer = setTimeout(() => {
+        setIsMobileWarningOpen(true);
+      }, 600);
+      return () => clearTimeout(timer);
+    }
+  }, []);
 
   const showToast = (msg) => {
     setToastMessage(msg);
@@ -121,6 +139,12 @@ export default function App() {
           setIsWalkthroughOpen(false);
           setIsResumeOpen(true);
         }}
+      />
+
+      <MobileWarningModal
+        isOpen={isMobileWarningOpen}
+        onClose={() => setIsMobileWarningOpen(false)}
+        onShowToast={showToast}
       />
 
       {/* Toast Notification */}
