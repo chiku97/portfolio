@@ -1,5 +1,6 @@
 // backend/services/ragEngine.js
-// Dynamic AI & RAG Knowledge Engine for Uttam Kumar Mahto's Portfolio
+// Dynamic AI & In-Memory Vector RAG Knowledge Engine for Uttam Kumar Mahto's Portfolio
+import { inMemoryVectorSearch, RESUME_CHUNKS } from './vectorSearch.js';
 
 // Single Source of Truth: Uttam's Profile & Engineering Facts
 export const CANDIDATE_PROFILE = {
@@ -189,13 +190,25 @@ export async function processAiQuery({ query, honestMode = false, conversationHi
     };
   }
 
+  // 0. High-Speed In-Memory Vector Search over Resume Chunks (Zero Database, <1ms)
+  const vectorResult = inMemoryVectorSearch({ query: trimmed, topK: 3 });
+
   // 1. Try Google Gemini API if key is present
   if (process.env.GEMINI_API_KEY && process.env.GEMINI_API_KEY.trim()) {
     try {
-      const geminiRes = await callGemini(trimmed, honestMode, conversationHistory);
+      const geminiRes = await callGemini(trimmed, honestMode, conversationHistory, vectorResult);
       if (geminiRes?.text) {
+        const sources = vectorResult.matches.filter(m => m.similarityScore > 0.05).map(m => `${m.title} (Cosine: ${m.similarityScore})`);
         return {
           ...geminiRes,
+          sources: sources.length > 0 ? sources : geminiRes.sources,
+          vectorSearch: {
+            algorithm: vectorResult.algorithm,
+            topScore: vectorResult.topScore,
+            topMatch: vectorResult.topMatch?.title,
+            latencyMs: vectorResult.latencyMs,
+            totalChunksScanned: vectorResult.totalChunksScanned
+          },
           latencyMs: Date.now() - startTime
         };
       }
@@ -207,10 +220,19 @@ export async function processAiQuery({ query, honestMode = false, conversationHi
   // 1b. Try OpenAI API if key is present
   if (process.env.OPENAI_API_KEY && process.env.OPENAI_API_KEY.trim()) {
     try {
-      const openAiRes = await callOpenAi(trimmed, honestMode, conversationHistory);
+      const openAiRes = await callOpenAi(trimmed, honestMode, conversationHistory, vectorResult);
       if (openAiRes?.text) {
+        const sources = vectorResult.matches.filter(m => m.similarityScore > 0.05).map(m => `${m.title} (Cosine: ${m.similarityScore})`);
         return {
           ...openAiRes,
+          sources: sources.length > 0 ? sources : openAiRes.sources,
+          vectorSearch: {
+            algorithm: vectorResult.algorithm,
+            topScore: vectorResult.topScore,
+            topMatch: vectorResult.topMatch?.title,
+            latencyMs: vectorResult.latencyMs,
+            totalChunksScanned: vectorResult.totalChunksScanned
+          },
           latencyMs: Date.now() - startTime
         };
       }
@@ -220,14 +242,22 @@ export async function processAiQuery({ query, honestMode = false, conversationHi
   }
 
   // 2. Dynamic, Profile-Aware Semantic Synthesizer (No brittle hardcoding)
-  const dynamicAnswer = generateDynamicResponse(trimmed, honestMode);
+  const dynamicAnswer = generateDynamicResponse(trimmed, honestMode, vectorResult);
+  const sources = vectorResult.matches.filter(m => m.similarityScore > 0.05).map(m => `${m.title} (Cosine: ${m.similarityScore})`);
 
   return {
     text: dynamicAnswer.text,
-    sources: dynamicAnswer.sources,
+    sources: sources.length > 0 ? sources : dynamicAnswer.sources,
+    vectorSearch: {
+      algorithm: vectorResult.algorithm,
+      topScore: vectorResult.topScore,
+      topMatch: vectorResult.topMatch?.title,
+      latencyMs: vectorResult.latencyMs,
+      totalChunksScanned: vectorResult.totalChunksScanned
+    },
     latencyMs: Date.now() - startTime,
     mode: honestMode ? "honest" : "pro",
-    model: "Uttam-Dynamic-RAG-v2"
+    model: "Uttam-In-Memory-Vector-RAG"
   };
 }
 
@@ -377,19 +407,27 @@ function generateDynamicResponse(query, honestMode) {
 /**
  * Dynamic Google Gemini API Caller
  */
-async function callGemini(query, honestMode, history) {
+async function callGemini(query, honestMode, history, vectorResult) {
   const apiKey = process.env.GEMINI_API_KEY.trim();
   const context = buildContextString();
 
-  const systemInstruction = `You are the official AI portfolio assistant for Uttam Kumar Mahto.
-Your goal is to answer recruiter and visitor questions accurately, concisely, and naturally based STRICTLY on Uttam's official verified resume provided below.
+  const retrievedChunksContext = (vectorResult?.matches || [])
+    .filter(m => m.similarityScore > 0.04)
+    .map((m, idx) => `[MATCH #${idx + 1} | In-Memory Cosine Similarity: ${m.similarityScore}] ${m.title}:\n${m.text}`)
+    .join('\n\n');
 
-GROUND TRUTH RESUME:
+  const systemInstruction = `You are the official AI portfolio assistant for Uttam Kumar Mahto.
+Your goal is to answer recruiter and visitor questions accurately, concisely, and naturally based STRICTLY on the retrieved resume vector chunks and official verified resume provided below.
+
+RETRIEVED RESUME CHUNKS (Top In-Memory Cosine Similarity Matches):
+${retrievedChunksContext || "Full resume ground truth provided below."}
+
+FULL GROUND TRUTH RESUME:
 ${context}
 
 CRITICAL ANTI-HALLUCINATION & REASONING RULES:
 1. ALWAYS answer the user's specific question directly in the very first sentence.
-2. STRICT RESUME FIDELITY: Every fact, metric, date, company, and skill you state MUST come directly from the GROUND TRUTH RESUME above. Never fabricate or extrapolate unlisted experiences.
+2. STRICT RESUME FIDELITY: Every fact, metric, date, company, and skill you state MUST come directly from the GROUND TRUTH RESUME and RETRIEVED CHUNKS above. Never fabricate or extrapolate unlisted experiences.
 3. Current Employment & Notice Period: Uttam is currently working as a Full Stack Developer at SnapBizz CloudTech Pvt. Ltd. (Bangalore) with a 1-month notice period. He is actively seeking full-time backend or full-stack software engineering opportunities in Bangalore or Remote.
 4. Key Projects at SnapBizz:
    - IRCTC Catering Billing and Management Dashboard: High-frequency billing, inventory reconciliation, and strict multi-tenant schema isolation.
@@ -462,10 +500,18 @@ CRITICAL ANTI-HALLUCINATION & REASONING RULES:
 /**
  * Dynamic OpenAI API Caller
  */
-async function callOpenAi(query, honestMode, history) {
+async function callOpenAi(query, honestMode, history, vectorResult) {
   const context = buildContextString();
+  const retrievedChunksContext = (vectorResult?.matches || [])
+    .filter(m => m.similarityScore > 0.04)
+    .map((m, idx) => `[MATCH #${idx + 1} | Cosine Sim: ${m.similarityScore}] ${m.title}:\n${m.text}`)
+    .join('\n\n');
+
   const systemPrompt = `You are the official AI portfolio assistant for Uttam Kumar Mahto.
-Your answers MUST be strictly grounded in Uttam's official verified resume below. Do NOT hallucinate or extrapolate unlisted facts.
+Your answers MUST be strictly grounded in the retrieved resume vector chunks and official verified resume below. Do NOT hallucinate.
+
+RETRIEVED RESUME CHUNKS (In-Memory Cosine Similarity):
+${retrievedChunksContext || "Full resume below."}
 
 GROUND TRUTH RESUME:
 ${context}

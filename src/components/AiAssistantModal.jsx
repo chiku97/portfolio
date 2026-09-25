@@ -108,11 +108,23 @@ export default function AiAssistantModal({ isOpen, onClose, honestMode, setHones
 
       const fullResponse = backendRes?.text || getAiResponse(q);
       const modelName = backendRes?.model || 'Uttam AI';
+      const sources = backendRes?.sources || [];
+      const vectorSearch = backendRes?.vectorSearch || null;
       let currentLength = 0;
       const responseId = `a-${Date.now()}`;
 
-      // Insert empty response container
-      setMessages(prev => [...prev, { id: responseId, role: 'assistant', text: '', model: modelName }]);
+      // Insert empty response container with vector telemetry
+      setMessages(prev => [
+        ...prev, 
+        { 
+          id: responseId, 
+          role: 'assistant', 
+          text: '', 
+          model: modelName,
+          sources,
+          vectorSearch
+        }
+      ]);
 
       const streamTimer = setInterval(() => {
         currentLength += 4;
@@ -235,6 +247,12 @@ export default function AiAssistantModal({ isOpen, onClose, honestMode, setHones
                 )}
                 <div className={`chat-bubble ${isUser ? 'bubble-user' : 'bubble-assistant'}`}>
                   <div className="bubble-text">{m.text}</div>
+                  {!isUser && m.text && m.vectorSearch && (
+                    <div className="vector-hud-badge font-mono">
+                      <span className="vector-badge-dot"></span>
+                      <span>VECTOR MATCH: {m.vectorSearch.topMatch || m.sources?.[0] || 'Resume Chunk'} (Sim: {m.vectorSearch.topScore}) • {m.vectorSearch.latencyMs}ms (0 DB)</span>
+                    </div>
+                  )}
                   {!isUser && m.text && (
                     <button
                       onClick={() => copyMessage(m.id, m.text)}
@@ -487,6 +505,28 @@ export default function AiAssistantModal({ isOpen, onClose, honestMode, setHones
 
         .bubble-text {
           white-space: pre-line;
+        }
+
+        .vector-hud-badge {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          margin-top: 8px;
+          padding: 3px 8px;
+          background: rgba(56, 189, 248, 0.08);
+          border: 1px solid rgba(56, 189, 248, 0.25);
+          border-radius: 4px;
+          font-size: 0.68rem;
+          color: var(--accent-cyan);
+          letter-spacing: 0.02em;
+        }
+
+        .vector-badge-dot {
+          width: 5px;
+          height: 5px;
+          border-radius: 50%;
+          background: var(--accent-cyan);
+          box-shadow: 0 0 6px var(--accent-cyan);
         }
 
         .bubble-copy-btn {
