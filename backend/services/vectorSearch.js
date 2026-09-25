@@ -10,7 +10,7 @@ export const RESUME_CHUNKS = [
     id: "candidate_status_availability",
     title: "Current Employment & 1-Month Notice Period",
     section: "Logistics & Status",
-    text: "Uttam Kumar Mahto is currently working as a Full Stack Developer at SnapBizz CloudTech Pvt. Ltd. in Bangalore. He has a standard 1-month notice period and is actively seeking full-time backend or full-stack software engineering roles in Bangalore or Remote. Email: uttamkumar9708@gmail.com, Phone: +91-8147747120, GitHub: github.com/chiku97.",
+    text: "Uttam Kumar Mahto is currently working as a Full Stack Developer at SnapBizz CloudTech Pvt. Ltd. in Bangalore. He has a standard 1-month notice period and is actively seeking full-time backend or full-stack software engineering roles in Bangalore or Remote. Email: mahtouttamkumar01, Phone: +91-8147747120, GitHub: github.com/chiku97.",
     keywords: [
       "currently", "working", "current", "company", "snapbizz", "cloudtech", "notice", "period", "1", "month",
       "immediate", "available", "availability", "join", "relocate", "remote", "bangalore", "role", "full", "stack",
@@ -146,7 +146,7 @@ export const RESUME_CHUNKS = [
     id: "contact_social_links",
     title: "Direct Contact & Social Profiles",
     section: "Contact",
-    text: "Uttam Kumar Mahto can be contacted directly at uttamkumar9708@gmail.com or by phone at +91-8147747120. LinkedIn: https://www.linkedin.com/in/uttam-kumar-mahto-b160bb197/ | GitHub: https://github.com/chiku97. Located in Bangalore, India.",
+    text: "Uttam Kumar Mahto can be contacted directly at mahtouttamkumar01 or by phone at +91-8147747120. LinkedIn: https://www.linkedin.com/in/uttam-kumar-mahto-b160bb197/ | GitHub: https://github.com/chiku97. Located in Bangalore, India.",
     keywords: [
       "contact", "email", "phone", "call", "reach", "talk", "interview", "hire", "linkedin", "github",
       "uttam", "kumar", "mahto", "bangalore", "profile", "portfolio", "connect", "message"

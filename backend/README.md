@@ -62,7 +62,7 @@ You can host this backend for **100% free** on Render while keeping your fronten
    - **Start Command**: `node server.js`
    - **Environment Variables**:
      - `CORS_ORIGIN`: `https://chiku97.github.io,http://localhost:5173`
-     - `ADMIN_EMAIL`: `uttamkumar9708@gmail.com`
+     - `ADMIN_EMAIL`: `mahtouttamkumar01`
 5. Click **Deploy Web Service**.
 6. Render will assign you a free URL like: `https://uttam-portfolio-api.onrender.com`.
 7. In your React frontend, set `VITE_API_URL=https://uttam-portfolio-api.onrender.com`.

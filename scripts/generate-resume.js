@@ -28,7 +28,7 @@ y += 16;
 doc.setFont('helvetica', 'normal');
 doc.setFontSize(9);
 doc.setTextColor(71, 85, 105); // slate-600
-const contactText = 'Bangalore, India • uttamkumar9708@gmail.com • +91-8147747120 • github.com/chiku97';
+const contactText = 'Bangalore, India • mahtouttamkumar01 • +91-8147747120 • github.com/chiku97';
 doc.text(contactText, 595.28 / 2, y, { align: 'center' });
 y += 14;
 
@@ -94,7 +94,7 @@ function addExperience(role, company, date, bullets) {
   doc.setFontSize(10);
   doc.setTextColor(15, 23, 42);
   doc.text(`${role} — ${company}`, margin, y);
-  
+
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(8.5);
   doc.setTextColor(100, 116, 139);

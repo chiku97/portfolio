@@ -69,7 +69,7 @@ User Query: "Find invoices with misspellings or semantic SKU matches"
  └── Output -> 100% grounded response with exact citations & 0 hallucination.`,
 
     "git-blame": `commit a7f903e1c2b5d4 (HEAD -> main)
-Author: Uttam Kumar Mahto <uttamkumar9708@gmail.com>
+Author: Uttam Kumar Mahto <mahtouttamkumar01>
 Date:   Thu 02:47:19 +0530
     "fix: resolved race condition in inventory lock that only appeared during flash sales"
 Status: Verified by 42 passing unit tests.`,
@@ -88,7 +88,7 @@ Warning: Do not approach if caffeine drops below 15%.`,
 
     "sudo hire": `🎉 PERMISSION GRANTED!
 Initializing VIP candidate onboarding sequence...
-Direct Email: uttamkumar9708@gmail.com
+Direct Email: mahtouttamkumar01
 Phone: +91-8147747120
 LinkedIn: https://linkedin.com/in/uttam-kumar-mahto-2b476717a
 Confetti cannon fired!`
@@ -190,8 +190,8 @@ Confetti cannon fired!`
               <TerminalIcon size={13} className="text-cyan" />
               <span>uttam@production-node: ~/portfolio (main)</span>
             </div>
-            <button 
-              onClick={() => { playClick(); setHistory([]); }} 
+            <button
+              onClick={() => { playClick(); setHistory([]); }}
               className="terminal-clear font-mono"
               title="Clear Terminal"
             >

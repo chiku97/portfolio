@@ -1,18 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { 
-  Search, 
-  X, 
-  Command, 
-  FileText, 
-  Sparkles, 
-  Cpu, 
-  Terminal, 
-  AlertTriangle, 
-  Globe, 
-  Coffee, 
-  Database, 
-  Activity, 
-  Mail, 
+import {
+  Search,
+  X,
+  Command,
+  FileText,
+  Sparkles,
+  Cpu,
+  Terminal,
+  AlertTriangle,
+  Globe,
+  Coffee,
+  Database,
+  Activity,
+  Mail,
   ExternalLink,
   Bot,
   Zap,
@@ -102,11 +102,11 @@ export default function CommandPalette({
       id: 'copy-email',
       group: 'Quick Actions',
       title: 'Copy Email Address',
-      subtitle: 'uttamkumar9708@gmail.com',
+      subtitle: 'mahtouttamkumar01',
       icon: <Mail size={16} className="text-cyan" />,
       action: () => {
-        navigator.clipboard.writeText('uttamkumar9708@gmail.com');
-        onShowToast("📋 Copied uttamkumar9708@gmail.com to clipboard!");
+        navigator.clipboard.writeText('mahtouttamkumar01');
+        onShowToast("📋 Copied mahtouttamkumar01 to clipboard!");
       }
     },
 
@@ -283,8 +283,8 @@ export default function CommandPalette({
 
   return (
     <div className="palette-backdrop" onClick={onClose}>
-      <div 
-        className="palette-container" 
+      <div
+        className="palette-container"
         onClick={(e) => e.stopPropagation()}
         role="dialog"
         aria-modal="true"

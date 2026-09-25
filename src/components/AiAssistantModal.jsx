@@ -80,7 +80,7 @@ export default function AiAssistantModal({ isOpen, onClose, honestMode, setHones
     }
 
     if (q.includes('contact') || q.includes('email') || q.includes('reach') || q.includes('talk')) {
-      return "You can reach Uttam directly at uttamkumar9708@gmail.com, or connect on LinkedIn (linkedin.com/in/uttam-kumar-mahto-2b476717a). He responds promptly!";
+      return "You can reach Uttam directly at mahtouttamkumar01, or connect on LinkedIn (linkedin.com/in/uttam-kumar-mahto-2b476717a). He responds promptly!";
     }
 
     // Default response
@@ -115,11 +115,11 @@ export default function AiAssistantModal({ isOpen, onClose, honestMode, setHones
 
       // Insert empty response container with vector telemetry
       setMessages(prev => [
-        ...prev, 
-        { 
-          id: responseId, 
-          role: 'assistant', 
-          text: '', 
+        ...prev,
+        {
+          id: responseId,
+          role: 'assistant',
+          text: '',
           model: modelName,
           sources,
           vectorSearch
