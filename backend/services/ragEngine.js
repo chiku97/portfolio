@@ -62,37 +62,113 @@ export const CANDIDATE_PROFILE = {
     "PostgreSQL EXPLAIN ANALYZE query planning, partition pruning on time-series retail transaction tables.",
     "Redis Cluster pipelining and Redlock distributed locking to prevent multi-tenant race conditions."
   ],
-  education: "Bachelor of Technology / Engineering in Computer Science."
+  education: [
+    {
+      degree: "Master of Computer Applications (MCA)",
+      institution: "Reva University, Bangalore, Karnataka",
+      period: "2020 – 2022",
+      focus: "Advanced software engineering, distributed systems, algorithms, and database design."
+    },
+    {
+      degree: "Bachelor of Science in Information Technology (B.Sc IT)",
+      institution: "Marwari College, Ranchi University, Jharkhand",
+      period: "2016 – 2019",
+      focus: "Core computer science fundamentals, data structures, networking, and programming."
+    }
+  ]
 };
 
+// Complete Official Verified Resume Ground-Truth Context
+export const FULL_RESUME_GROUND_TRUTH = `
+================================================================================
+UTTAM KUMAR MAHTO — OFFICIAL VERIFIED RESUME (GROUND TRUTH)
+================================================================================
+
+CONTACT & LOGISTICS:
+- Full Name: Uttam Kumar Mahto
+- Professional Title: Full Stack & Backend Systems Engineer
+- Location: Bangalore, Karnataka, India
+- Email: uttamkumar9708@gmail.com
+- Phone: +91-8147747120
+- GitHub: https://github.com/chiku97
+- LinkedIn: https://www.linkedin.com/in/uttam-kumar-mahto-b160bb197/
+- Current Employment Status: Currently working as Full Stack Developer at SnapBizz CloudTech Pvt. Ltd. (Bangalore).
+- Notice Period: Standard 1-month notice period.
+- Job Search Intent: Actively seeking full-time backend or full-stack software engineering roles in Bangalore or Remote.
+
+PROFESSIONAL SUMMARY:
+Backend-Focused Full Stack Engineer with 3+ years of experience designing and developing scalable, high-performance web applications across Healthcare, EdTech, and RetailTech domains. Strong expertise in Node.js, Express.js, React.js, Go (Golang), Ruby on Rails, PostgreSQL, MySQL, Redis, Elasticsearch, Docker, AWS, and CI/CD. Hands-on experience building multi-tenant architectures, high-concurrency assessment platforms, and production RAG pipelines with pgvector, Elasticsearch hybrid search, and OpenAI/Gemini LLMs.
+
+TECHNICAL SKILLS INVENTORY:
+- Core Languages: JavaScript (ES6+), TypeScript, Go (Golang), Ruby, SQL, HTML5, CSS3, Python (AI/Embeddings)
+- Backend & APIs: Node.js, Express.js, Go (Golang), Ruby on Rails, RESTful APIs, Microservices Architecture, Multi-Tenant Architecture, Role-Based Access Control (RBAC), JWT Authentication & Session Rotation
+- Databases & AI Search: PostgreSQL, pgvector (Vector Embeddings, Cosine Similarity, HNSW), Elasticsearch (BM25, Fuzzy AUTO, Reciprocal Rank Fusion RRF), Redis (Caching, Distributed Locking with Redlock, Queues), MySQL, MongoDB, Prisma ORM
+- AI Engineering: Retrieval-Augmented Generation (RAG), Reciprocal Rank Fusion (RRF), Hybrid Lexical + Semantic Search, Prompt Engineering, OpenAI API, Google Gemini API
+- Frontend: React 19, React.js, Vite, Next.js, Vue.js, Redux / Redux Toolkit, Tailwind CSS, Three.js (WebGL), CSS Glassmorphism
+- Cloud, DevOps & Tools: Docker, AWS (EC2, S3, RDS), Kubernetes, Drone CI, Jenkins, Nginx, CI/CD Pipelines, Linux / Bash, Git & GitHub
+- Testing & Observability: Cypress (E2E), Jest, Mocha, Chai, Supertest, Postman, Grafana, New Relic
+
+TECHNOLOGIES HE DOES NOT SPECIALIZE IN PRODUCTION (DO NOT HALLUCINATE):
+- Does NOT do enterprise Java / Spring Boot in production.
+- Does NOT do C# / .NET in production.
+- Does NOT do PHP / WordPress in production.
+- Does NOT build native mobile apps (iOS Swift, Android Kotlin, Flutter) in production.
+- Does NOT write Rust in production.
+His verified core production strength is Node.js, Go (Golang), PostgreSQL (with pgvector), Redis, Elasticsearch, and React.
+
+PROFESSIONAL EXPERIENCE:
+
+1. SnapBizz CloudTech Pvt. Ltd. (Bangalore, Karnataka)
+   Role: Full Stack Developer
+   Period: Feb 2026 – Present (Current Position • 1 Month Notice Period)
+   Key Projects & Responsibilities:
+   • IRCTC Catering Billing and Management Dashboard: Architected and built the enterprise catering billing and inventory management dashboard for IRCTC operations, managing high-frequency transactions, billing automation, and multi-tenant inventory reconciliation under strict enterprise SLAs.
+   • Production Hybrid RAG & Vector Search Pipeline: Engineered an enterprise Hybrid RAG search system fusing Elasticsearch BM25 (typo tolerance for erratic cashier SKU inputs) with PostgreSQL pgvector (semantic search via 1536-dim vector embeddings), utilizing Reciprocal Rank Fusion (RRF). Achieved sub-20ms latency across 100,000+ SKUs with zero hallucination and verified audit trails.
+   • Scalable Backend Microservices: Designed and developed scalable Node.js and Express.js backend services handling multi-warehouse transfers, live stock reconciliation, and inventory tracking across nationwide retail networks.
+   • Multi-Tenant Schema Partitioning: Implemented strict multi-tenant architecture with isolated tenant schemas and RBAC, ensuring enterprise clients like IRCTC and Axis Bank never leak cross-tenant data.
+   • Redis High-Throughput Caching: Built a Redis caching layer for hot inventory tables and catalog lookups, cutting repeated MySQL database queries and sustaining peak transactional traffic during flash deals.
+   • Containerized AWS Deployment: Containerized services via Docker and managed zero-downtime rolling AWS deployments.
+
+2. INCANUS Technologies Pvt. Ltd. (Bangalore, Karnataka)
+   Role: Backend & Systems Engineer
+   Period: Nov 2023 – Jan 2026 (1.2 Years)
+   Key Projects & Responsibilities:
+   • High-Concurrency Evaluation Engine: Built the high-concurrency online evaluation engine for coding assessments handling 10,000+ simultaneous test-taking students with zero session drops.
+   • Docker Code Execution Sandbox: Safely executed untrusted candidate code (Python, Java, C++, JS) inside ephemeral Docker containers with strict CPU throttles, 128MB RAM caps, disabled network access, and zero container escapes.
+   • Priority Queues & Telemetry: Engineered Redis priority job queues and real-time evaluation telemetry with sub-2s execution feedback. Eliminated critical N+1 queries in MySQL, achieving a 40% reduction in API response times under high concurrency.
+   • Automated CI/CD & Testing: Automated CI/CD pipelines using Drone CI and Docker, accompanied by end-to-end Cypress test suites and Mocha/Chai backend unit tests, reducing deployment cycles from 25 minutes down to 4 minutes.
+
+3. Cerner Healthcare Solutions (Oracle) (Bangalore, Karnataka)
+   Role: Software Engineer / Associate Software Engineer
+   Period: Feb 2022 – Oct 2023 (1.5 Years)
+   Key Projects & Responsibilities:
+   • Clinical Healthcare Data Interoperability: Owned and developed backend modules for clinician Activity Logs and Medication Workflow services adhering to HIPAA compliance and conforming to HL7 and FHIR clinical data exchange standards.
+   • Clinician User Interface: Developed high-performance, responsive React.js components for clinician dashboards, focusing on render speed and fast patient record retrieval.
+   • Observability & Alerting: Set up observability alerts and tracing using Grafana and New Relic to detect query latency regressions before impacting hospital clinicians. Achieved 90%+ unit test coverage using Mocha, Chai, and Jest.
+
+EDUCATION:
+1. Master of Computer Applications (MCA)
+   Institution: Reva University, Bangalore, Karnataka
+   Period: 2020 – 2022
+   Focus: Advanced software engineering, distributed systems, algorithms, and database design.
+
+2. Bachelor of Science in Information Technology (B.Sc IT)
+   Institution: Marwari College, Ranchi University, Jharkhand
+   Period: 2016 – 2019
+   Focus: Core computer science fundamentals, data structures, networking, and programming.
+
+DATABASE & SYSTEMS BENCHMARKS:
+- Composite covering B-Tree indexes with INCLUDE clauses enabling Index-Only Scans (reducing sequential scans from 1,800ms down to 3.2ms).
+- PostgreSQL EXPLAIN ANALYZE query planning, partition pruning on time-series retail transaction tables.
+- Redis Cluster pipelining and Redlock distributed locking to prevent multi-tenant race conditions.
+================================================================================
+`;
+
 /**
- * Format profile context for LLM prompt grounding
+ * Format profile context for LLM prompt grounding (Passes Full Resume Ground Truth)
  */
 function buildContextString() {
-  const p = CANDIDATE_PROFILE;
-  return `
-CANDIDATE INFORMATION:
-- Name: ${p.name}
-- Title: ${p.role} (${p.experienceYears} production experience)
-- Location: ${p.location}
-- Availability: ${p.availability}
-- Contact: Email: ${p.contact.email} | Phone: ${p.contact.phone} | LinkedIn: ${p.contact.linkedin} | GitHub: ${p.contact.github}
-
-CORE PRODUCTION SKILLS:
-${p.skills.primary.join(', ')}
-
-SECONDARY & FAMILIAR TOOLS:
-${p.skills.secondary.join(', ')}
-
-TECHNOLOGIES HE DOES NOT SPECIALIZE IN PRODUCTION:
-${p.skills.notSpecialized.join(', ')} (e.g. He does NOT use Spring Boot, .NET, or mobile apps in production; his strength is Node.js, Go, PostgreSQL, Redis, and React).
-
-WORK HISTORY:
-${p.experience.map(e => `• ${e.company} (${e.role}): ${e.highlights.join(' ')}`).join('\n')}
-
-DATABASE & SYSTEMS TUNING:
-${p.databaseOptimizations.join('\n')}
-`;
+  return FULL_RESUME_GROUND_TRUTH.trim();
 }
 
 /**
@@ -217,6 +293,16 @@ function generateDynamicResponse(query, honestMode) {
     };
   }
 
+  // C2. Education & Degrees
+  if (q.includes('education') || q.includes('degree') || q.includes('college') || q.includes('university') || q.includes('mca') || q.includes('b.sc') || q.includes('graduate') || q.includes('study') || q.includes('studied')) {
+    return {
+      text: honestMode
+        ? `Uttam holds a Master of Computer Applications (MCA) from Reva University, Bangalore (2020–2022) and a Bachelor of Science in Information Technology (B.Sc IT) from Marwari College / Ranchi University (2016–2019).`
+        : `Uttam holds a Master of Computer Applications (MCA) from Reva University, Bangalore (2020–2022), and a Bachelor of Science in Information Technology (B.Sc IT) from Ranchi University / Marwari College (2016–2019).`,
+      sources: ["Education & Degrees"]
+    };
+  }
+
   // D. Check for explicitly non-specialized technologies (e.g. Spring Boot, C#, PHP, Swift)
   const nonSpecializedMatch = p.skills.notSpecialized.find(item => {
     const tokens = item.toLowerCase().split(/[\s/()]+/);
@@ -296,18 +382,23 @@ async function callGemini(query, honestMode, history) {
   const context = buildContextString();
 
   const systemInstruction = `You are the official AI portfolio assistant for Uttam Kumar Mahto.
-Your goal is to answer recruiter and visitor questions accurately, concisely, and naturally based on Uttam's factual background.
+Your goal is to answer recruiter and visitor questions accurately, concisely, and naturally based STRICTLY on Uttam's official verified resume provided below.
 
-GROUND TRUTH CONTEXT:
+GROUND TRUTH RESUME:
 ${context}
 
-CRITICAL REASONING RULES:
+CRITICAL ANTI-HALLUCINATION & REASONING RULES:
 1. ALWAYS answer the user's specific question directly in the very first sentence.
-2. If asked if Uttam is currently working or his notice period: State clearly that he is currently working as a Full Stack Developer at SnapBizz CloudTech Pvt. Ltd. with a 1-month notice period, and is actively seeking full-time backend or full-stack engineering opportunities in Bangalore or Remote.
-3. If asked about his projects at SnapBizz: Highlight the IRCTC Catering Billing and Management Dashboard and the production Hybrid RAG pipeline (Elasticsearch BM25 + PostgreSQL pgvector with Reciprocal Rank Fusion, sub-20ms across 100,000+ SKUs).
-4. If the user asks whether Uttam knows or works with a technology that is NOT in his core stack (e.g. Spring Boot, C#, PHP, Swift), clearly state that he does not specialize in it in his production work, and mention his relevant core backend tools (Node.js, Go, PostgreSQL). Never pretend he has experience in tools he doesn't list.
-5. Tone: ${honestMode ? "BRUTALLY HONEST, witty, pragmatic engineering mindset" : "PROFESSIONAL, precise, and technically grounded"}.
-6. Keep your response under 120 words. No robotic fluff.`;
+2. STRICT RESUME FIDELITY: Every fact, metric, date, company, and skill you state MUST come directly from the GROUND TRUTH RESUME above. Never fabricate or extrapolate unlisted experiences.
+3. Current Employment & Notice Period: Uttam is currently working as a Full Stack Developer at SnapBizz CloudTech Pvt. Ltd. (Bangalore) with a 1-month notice period. He is actively seeking full-time backend or full-stack software engineering opportunities in Bangalore or Remote.
+4. Key Projects at SnapBizz:
+   - IRCTC Catering Billing and Management Dashboard: High-frequency billing, inventory reconciliation, and strict multi-tenant schema isolation.
+   - Production Hybrid RAG & Vector Search Pipeline: Elasticsearch BM25 + PostgreSQL pgvector with Reciprocal Rank Fusion (RRF), achieving sub-20ms latency across 100,000+ SKUs.
+5. Education: Master of Computer Applications (MCA, 2020–2022) from Reva University, Bangalore; Bachelor of Science in Information Technology (B.Sc IT, 2016–2019) from Marwari College / Ranchi University.
+6. Negative Skill Matching: If the user asks whether Uttam knows or works with a technology NOT in his core stack (e.g. Spring Boot, C#, PHP, Swift, Rust), explicitly state that he does not specialize in it in his production work, and cite his core production tools (Node.js, Go, PostgreSQL, Redis, React). Never pretend he has experience in tools he doesn't list.
+7. If asked a question that cannot be answered from the resume context, acknowledge honestly that it is not covered in his public portfolio and invite them to reach out to Uttam directly at uttamkumar9708@gmail.com.
+8. Tone: ${honestMode ? "BRUTALLY HONEST, witty, pragmatic engineering mindset" : "PROFESSIONAL, precise, and technically grounded"}.
+9. Keep your response under 120 words. No robotic fluff.`;
 
   const contents = [];
   for (const h of history.slice(-4)) {
@@ -374,12 +465,18 @@ CRITICAL REASONING RULES:
 async function callOpenAi(query, honestMode, history) {
   const context = buildContextString();
   const systemPrompt = `You are the official AI portfolio assistant for Uttam Kumar Mahto.
-Context:
+Your answers MUST be strictly grounded in Uttam's official verified resume below. Do NOT hallucinate or extrapolate unlisted facts.
+
+GROUND TRUTH RESUME:
 ${context}
-Rules:
-1. Answer the user's specific question directly in the first sentence.
-2. If asked about a skill he does NOT have in production (e.g. Spring Boot), state it honestly and state his actual core stack (Node.js, Go).
-3. Tone: ${honestMode ? "Brutally honest & pragmatic" : "Professional & technical"}. Keep under 120 words.`;
+
+RULES:
+1. Answer the user's specific question directly in the very first sentence.
+2. Current role: Full Stack Developer at SnapBizz CloudTech Pvt. Ltd. (1-month notice period, seeking full-time backend/full-stack roles in Bangalore/Remote).
+3. Projects at SnapBizz: IRCTC Catering Billing and Management Dashboard; sub-20ms Hybrid RAG & Vector Search across 100k+ SKUs (BM25 + pgvector + RRF).
+4. Education: MCA (Reva University, 2020-2022); B.Sc IT (Ranchi University / Marwari College, 2016-2019).
+5. If asked about a skill he does NOT have in production (e.g. Spring Boot, .NET, PHP, Swift), state it honestly and state his actual core stack (Node.js, Go, PostgreSQL, Redis).
+6. Tone: ${honestMode ? "Brutally honest & pragmatic" : "Professional & technical"}. Keep under 120 words.`;
 
   const messages = [
     { role: "system", content: systemPrompt },
