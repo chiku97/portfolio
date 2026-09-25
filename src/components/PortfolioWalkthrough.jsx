@@ -154,10 +154,10 @@ export default function PortfolioWalkthrough({
     }
   ];
 
-  // Specific rule: Only Step 3 and Step 4 should have less z-index than the walkthrough modal
-  const isStep3or4 = currentStep === 2 || currentStep === 3;
-  const highlighterZIndex = isStep3or4 ? 1010 : 100000;
-  const modalZIndex = isStep3or4 ? 99999 : 1050;
+  // Specific rule: Step 2, Step 3, and Step 4 should have less z-index than the walkthrough modal (behind the modal)
+  const isLowerZIndexStep = currentStep === 1 || currentStep === 2 || currentStep === 3;
+  const highlighterZIndex = isLowerZIndexStep ? 1010 : 100000;
+  const modalZIndex = isLowerZIndexStep ? 99999 : 1050;
 
   const current = steps[currentStep];
   const isPillTarget = current.targetId === 'nav-tone-switch' || current.targetId === 'nav-resume-btn' || current.targetId === 'hero-ai-badge';
@@ -207,7 +207,7 @@ export default function PortfolioWalkthrough({
           activeEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
 
-        const highlightClass = isStep3or4 ? 'walkthrough-highlighted-lower' : 'walkthrough-highlighted-element';
+        const highlightClass = isLowerZIndexStep ? 'walkthrough-highlighted-lower' : 'walkthrough-highlighted-element';
         activeEl.classList.add(highlightClass);
       }
     }
@@ -230,7 +230,7 @@ export default function PortfolioWalkthrough({
       window.removeEventListener('resize', updateTargetRect);
       window.removeEventListener('scroll', updateTargetRect);
     };
-  }, [currentStep, isOpen, isStep3or4]);
+  }, [currentStep, isOpen, isLowerZIndexStep]);
 
   // Keyboard navigation (Esc, ArrowRight, ArrowLeft)
   useEffect(() => {
@@ -283,8 +283,8 @@ export default function PortfolioWalkthrough({
       {/* 
         LAYER 1: Backdrop & Target Highlighter 
         z-index is controlled dynamically:
-        For Step 3 and Step 4 ONLY, highlighter has LESS z-index (1010) than modal (99999).
-        For all other steps, highlighter has GREATER z-index (100000) than modal (1050).
+        For Step 2, Step 3, and Step 4, highlighter has LESS z-index (1010) than modal (99999).
+        For Step 1, Step 5, and Step 6, highlighter has GREATER z-index (100000) than modal (1050).
       */}
       <div className="walkthrough-highlighter-layer">
         {/* Dimmed & Blurred Backdrop with Cutout Hole: Target area is physically outside polygon so it is NEVER blurred */}
@@ -438,7 +438,7 @@ export default function PortfolioWalkthrough({
           transition: clip-path 0.3s cubic-bezier(0.16, 1, 0.3, 1), -webkit-clip-path 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* For Step 1, 2, 5, 6: target element is above modal (z-index 99990) */
+        /* For Step 1, 5, 6: target element is above modal (z-index 99990) */
         .walkthrough-highlighted-element {
           position: relative !important;
           z-index: 99990 !important;
@@ -446,7 +446,7 @@ export default function PortfolioWalkthrough({
           -webkit-filter: none !important;
         }
 
-        /* For Step 3 & 4 only: target element has LESS z-index than modal (z-index 1005) */
+        /* For Step 2, 3 & 4: target element has LESS z-index than modal (z-index 1005) */
         .walkthrough-highlighted-lower {
           position: relative !important;
           z-index: 1005 !important;
