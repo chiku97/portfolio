@@ -1,25 +1,18 @@
 // src/utils/api.js
 // Client API adapter for Uttam's Portfolio Backend
 
-const API_BASE = import.meta.env.VITE_API_URL || (
+const PROD_BACKEND_URL = 'https://portfolio-vert-xi-71.vercel.app';
+
+const API_BASE = (
   typeof window !== 'undefined' && window.location.hostname === 'localhost'
     ? 'http://localhost:5000'
-    : ''
+    : (import.meta.env.VITE_API_URL || PROD_BACKEND_URL).replace(/\/+$/, '')
 );
 
 /**
  * Helper to execute safe API requests with timeout and fallback
  */
 async function fetchApi(endpoint, options = {}, timeoutMs = 8000) {
-  // Only bypass on static GitHub Pages when no external backend API is configured
-  const isStaticGitHubPages = typeof window !== 'undefined' && 
-    window.location.hostname.endsWith('github.io') && 
-    !import.meta.env.VITE_API_URL;
-
-  if (isStaticGitHubPages) {
-    return null;
-  }
-
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
 
