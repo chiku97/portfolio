@@ -15,8 +15,8 @@ export default function Footer({ onOpenDeployGuide }) {
         </div>
 
         <div className="footer-center">
-          <button onClick={onOpenDeployGuide} className="deploy-guide-btn font-mono">
-            <span>GitHub Pages Setup Guide</span>
+          <button onClick={onOpenDeployGuide} className="deploy-guide-btn font-mono" title="Deploy this portfolio template for yourself">
+            <span>Fork &amp; Deploy Your Own Portfolio</span>
             <ArrowUpRight size={12} />
           </button>
         </div>
