@@ -72,10 +72,53 @@ export async function getDb() {
   return cache;
 }
 
+const COUNTER_API_BASE = 'https://countapi.mileshilliard.com/api/v1';
+const COUNTER_KEY = 'uttam_portfolio_views_chiku97';
+const BASELINE_VIEWS = 1420;
+
+// Zero-database persistent view counter reader with timeout & local fallback
+async function fetchPersistentViews() {
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 2500);
+    const res = await fetch(`${COUNTER_API_BASE}/get/${COUNTER_KEY}`, { signal: controller.signal });
+    clearTimeout(timeout);
+    if (res.ok) {
+      const data = await res.json();
+      if (typeof data.value === 'number') {
+        return BASELINE_VIEWS + data.value;
+      }
+    }
+  } catch {
+    // Fallback gracefully to local cache
+  }
+  return cache?.pageViews || BASELINE_VIEWS;
+}
+
+// Zero-database persistent view counter atomic increment
+async function incrementPersistentViews() {
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 2500);
+    const res = await fetch(`${COUNTER_API_BASE}/hit/${COUNTER_KEY}`, { signal: controller.signal });
+    clearTimeout(timeout);
+    if (res.ok) {
+      const data = await res.json();
+      if (typeof data.value === 'number') {
+        return BASELINE_VIEWS + data.value;
+      }
+    }
+  } catch {
+    // Fallback gracefully to local cache increment
+  }
+  return (cache?.pageViews || BASELINE_VIEWS) + 1;
+}
+
 export async function getStats() {
   const db = await getDb();
+  const persistentViews = await fetchPersistentViews();
   return {
-    pageViews: db.pageViews,
+    pageViews: persistentViews,
     terminalCommandsRun: db.terminalCommandsRun,
     aiChatsHandled: db.aiChatsHandled,
     projectLikes: db.projectLikes,
@@ -87,10 +130,11 @@ export async function getStats() {
 
 export async function recordPageView() {
   const db = await getDb();
-  db.pageViews += 1;
+  const newViews = await incrementPersistentViews();
+  db.pageViews = newViews;
   db.visitorAnalytics.lastActive = new Date().toISOString();
   saveDb();
-  return db.pageViews;
+  return newViews;
 }
 
 export async function recordTerminalRun(cmd = '') {
