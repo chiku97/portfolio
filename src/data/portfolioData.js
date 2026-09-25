@@ -4,7 +4,7 @@ export const personalInfo = {
   location: "Bangalore, Karnataka, India",
   email: "uttamkumar9708@gmail.com",
   phone: "+91-8147747120",
-  linkedin: "https://linkedin.com/in/uttam-kumar-mahto-2b476717a",
+  linkedin: "https://www.linkedin.com/in/uttam-kumar-mahto-b160bb197/",
   github: "https://github.com/chiku97",
   status: {
     honest: "⚡ Available for hire (willing to trade clean SQL indexes and memory leak extermination for money & zero-meeting Thursdays)",
@@ -66,7 +66,7 @@ export const experiences = [
       }
     ],
     techStack: [
-      "Node.js", "Express.js", "PostgreSQL", "pgvector", "MySQL", 
+      "Node.js", "Express.js", "PostgreSQL", "pgvector", "MySQL",
       "Elasticsearch", "Redis", "React.js", "Vue.js", "Docker", "AWS", "LLM APIs"
     ]
   },
@@ -101,7 +101,7 @@ export const experiences = [
       }
     ],
     techStack: [
-      "Node.js", "Express.js", "React.js", "Vue.js", "MySQL", 
+      "Node.js", "Express.js", "React.js", "Vue.js", "MySQL",
       "Docker", "AWS EC2", "Drone CI", "Cypress", "Mocha", "Chai"
     ]
   },
@@ -132,7 +132,7 @@ export const experiences = [
       }
     ],
     techStack: [
-      "Ruby on Rails", "Node.js", "React.js", "PostgreSQL", 
+      "Ruby on Rails", "Node.js", "React.js", "PostgreSQL",
       "Redis", "Docker", "Jenkins", "Grafana", "New Relic"
     ]
   }
