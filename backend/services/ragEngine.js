@@ -10,7 +10,7 @@ export const CANDIDATE_PROFILE = {
   location: "Bangalore, Karnataka, India",
   availability: "Currently working at SnapBizz CloudTech Pvt. Ltd. with a 1-month notice period; actively seeking opportunities for full-time backend or full-stack software engineering roles in Bangalore or Remote.",
   contact: {
-    email: "mahtouttamkumar01",
+    email: "mahtouttamkumar01@gmail.com",
     phone: "+91-8147747120",
     linkedin: "https://www.linkedin.com/in/uttam-kumar-mahto-b160bb197/",
     github: "https://github.com/chiku97"
@@ -89,7 +89,7 @@ CONTACT & LOGISTICS:
 - Full Name: Uttam Kumar Mahto
 - Professional Title: Full Stack & Backend Systems Engineer
 - Location: Bangalore, Karnataka, India
-- Email: mahtouttamkumar01
+- Email: mahtouttamkumar01@gmail.com
 - Phone: +91-8147747120
 - GitHub: https://github.com/chiku97
 - LinkedIn: https://www.linkedin.com/in/uttam-kumar-mahto-b160bb197/
@@ -434,7 +434,7 @@ CRITICAL ANTI-HALLUCINATION & REASONING RULES:
    - Production Hybrid RAG & Vector Search Pipeline: Elasticsearch BM25 + PostgreSQL pgvector with Reciprocal Rank Fusion (RRF), achieving sub-20ms latency across 100,000+ SKUs.
 5. Education: Master of Computer Applications (MCA, 2020–2022) from Reva University, Bangalore; Bachelor of Science in Information Technology (B.Sc IT, 2016–2019) from Marwari College / Ranchi University.
 6. Negative Skill Matching: If the user asks whether Uttam knows or works with a technology NOT in his core stack (e.g. Spring Boot, C#, PHP, Swift, Rust), explicitly state that he does not specialize in it in his production work, and cite his core production tools (Node.js, Go, PostgreSQL, Redis, React). Never pretend he has experience in tools he doesn't list.
-7. If asked a question that cannot be answered from the resume context, acknowledge honestly that it is not covered in his public portfolio and invite them to reach out to Uttam directly at mahtouttamkumar01.
+7. If asked a question that cannot be answered from the resume context, acknowledge honestly that it is not covered in his public portfolio and invite them to reach out to Uttam directly at mahtouttamkumar01@gmail.com.
 8. Tone: ${honestMode ? "BRUTALLY HONEST, witty, pragmatic engineering mindset" : "PROFESSIONAL, precise, and technically grounded"}.
 9. Keep your response under 120 words. No robotic fluff.`;
 

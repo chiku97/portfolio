@@ -2,7 +2,7 @@ export const personalInfo = {
   name: "Uttam Kumar Mahto",
   role: "Full Stack & Backend Systems Engineer",
   location: "Bangalore, Karnataka, India",
-  email: "mahtouttamkumar01",
+  email: "mahtouttamkumar01@gmail.com",
   phone: "+91-8147747120",
   linkedin: "https://www.linkedin.com/in/uttam-kumar-mahto-b160bb197/",
   github: "https://github.com/chiku97",

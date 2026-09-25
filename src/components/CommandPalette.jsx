@@ -102,11 +102,11 @@ export default function CommandPalette({
       id: 'copy-email',
       group: 'Quick Actions',
       title: 'Copy Email Address',
-      subtitle: 'mahtouttamkumar01',
+      subtitle: 'mahtouttamkumar01@gmail.com',
       icon: <Mail size={16} className="text-cyan" />,
       action: () => {
-        navigator.clipboard.writeText('mahtouttamkumar01');
-        onShowToast("📋 Copied mahtouttamkumar01 to clipboard!");
+        navigator.clipboard.writeText('mahtouttamkumar01@gmail.com');
+        onShowToast("📋 Copied mahtouttamkumar01@gmail.com to clipboard!");
       }
     },
 
