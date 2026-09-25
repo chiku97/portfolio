@@ -6,13 +6,13 @@
   "type": "module",
   "scripts": {
     "start": "node server.js",
+    "build": "echo 'Backend build ready'",
     "dev": "node --watch server.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
-    "express": "^4.21.2",
-    "portfolio": "file:.."
+    "express": "^4.21.2"
   },
   "keywords": [
     "portfolio-backend",
