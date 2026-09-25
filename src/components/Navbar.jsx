@@ -12,7 +12,8 @@ import {
   Sparkles,
   HelpCircle,
   Search,
-  Bot
+  Bot,
+  Code2
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { personalInfo } from '../data/portfolioData';
@@ -25,6 +26,7 @@ export default function Navbar({
   onOpenWalkthrough,
   onOpenCommandPalette,
   onOpenAiAssistant,
+  onOpenApiExplorer,
   onShowToast
 }) {
   const [scrolled, setScrolled] = useState(false);
@@ -229,6 +231,17 @@ export default function Navbar({
             <span className="ai-label">Ask AI</span>
           </button>
 
+          {/* REST API Explorer Trigger */}
+          <button
+            id="nav-api-btn"
+            onClick={() => { playClick(); onOpenApiExplorer && onOpenApiExplorer(); }}
+            className="btn-dock-api font-mono"
+            title="Live REST API Explorer & Swagger-Lite Sandbox"
+          >
+            <Code2 size={12} className="text-emerald" />
+            <span className="api-label">API</span>
+          </button>
+
           {/* Interactive Walkthrough Tour Trigger */}
           <button
             id="nav-tour-btn"
@@ -336,6 +349,14 @@ export default function Navbar({
                 >
                   <Bot size={14} className="text-cyan" />
                   <span>Chat with Uttam's AI</span>
+                </button>
+
+                <button
+                  onClick={() => { onOpenApiExplorer && onOpenApiExplorer(); setMobileMenuOpen(false); }}
+                  className="btn btn-subtle w-full justify-center font-mono"
+                >
+                  <Code2 size={14} className="text-emerald" />
+                  <span>REST API Explorer (Swagger)</span>
                 </button>
               </div>
 
@@ -618,6 +639,30 @@ export default function Navbar({
 
         .tone-icon {
           flex-shrink: 0;
+        }
+
+        /* API Explorer Dock Button */
+        .btn-dock-api {
+          display: inline-flex;
+          align-items: center;
+          gap: 5px;
+          padding: 4px 10px;
+          border-radius: var(--radius-full);
+          background: rgba(16, 185, 129, 0.1);
+          border: 1px solid rgba(16, 185, 129, 0.28);
+          color: #6ee7b7;
+          font-size: 0.74rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.15s ease;
+          flex-shrink: 0;
+        }
+
+        .btn-dock-api:hover {
+          background: rgba(16, 185, 129, 0.2);
+          border-color: rgba(16, 185, 129, 0.5);
+          color: #ffffff;
+          transform: translateY(-1px);
         }
 
         /* Interactive Tour Dock Button */

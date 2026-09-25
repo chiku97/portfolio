@@ -11,7 +11,8 @@ import {
   ChevronUp, 
   ChevronDown, 
   Zap,
-  GitBranch
+  GitBranch,
+  Code2
 } from 'lucide-react';
 import { playClick, playSuccess } from '../utils/audio';
 import { getPortfolioStats, recordPageViewApi } from '../utils/api';
@@ -66,7 +67,7 @@ function toggleAmbientAudio(enable) {
   }
 }
 
-export default function DeveloperVitalsDock({ onOpenTerminal, onShowToast }) {
+export default function DeveloperVitalsDock({ onOpenTerminal, onShowToast, onOpenApiExplorer }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isPlayingSynth, setIsPlayingSynth] = useState(false);
   const [currentTime, setCurrentTime] = useState('');
@@ -155,6 +156,19 @@ export default function DeveloperVitalsDock({ onOpenTerminal, onShowToast }) {
             >
               {isPlayingSynth ? <Volume2 size={13} className="text-cyan" /> : <VolumeX size={13} />}
               <span>{isPlayingSynth ? "SYNTH ON" : "PLAY SYNTH"}</span>
+            </button>
+
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                playClick();
+                if (onOpenApiExplorer) onOpenApiExplorer();
+              }}
+              className="dock-api-btn font-mono"
+              title="Test Live REST Endpoints (Swagger-Lite Sandbox)"
+            >
+              <Code2 size={13} className="text-emerald" />
+              <span>API SANDBOX</span>
             </button>
           </div>
 
@@ -385,6 +399,26 @@ export default function DeveloperVitalsDock({ onOpenTerminal, onShowToast }) {
         .synth-active {
           border-color: rgba(56, 189, 248, 0.5);
           background: rgba(56, 189, 248, 0.15);
+        }
+
+        .dock-api-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 4px;
+          background: rgba(16, 185, 129, 0.1);
+          border: 1px solid rgba(16, 185, 129, 0.35);
+          border-radius: var(--radius-xs);
+          padding: 3px 8px;
+          font-size: 0.62rem;
+          color: #6ee7b7;
+          cursor: pointer;
+          transition: all 0.15s ease;
+        }
+
+        .dock-api-btn:hover {
+          background: rgba(16, 185, 129, 0.22);
+          border-color: rgba(16, 185, 129, 0.6);
+          color: #ffffff;
         }
 
         .vitals-content {

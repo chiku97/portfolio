@@ -21,6 +21,7 @@ import MobileWarningModal from './components/MobileWarningModal';
 import CommandPalette from './components/CommandPalette';
 import AiAssistantModal from './components/AiAssistantModal';
 import DeveloperVitalsDock from './components/DeveloperVitalsDock';
+import ApiExplorerModal from './components/ApiExplorerModal';
 
 export default function App() {
   const [honestMode, setHonestMode] = useState(true);
@@ -32,6 +33,7 @@ export default function App() {
   const [isMobileWarningOpen, setIsMobileWarningOpen] = useState(false);
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
   const [isAiAssistantOpen, setIsAiAssistantOpen] = useState(false);
+  const [isApiExplorerOpen, setIsApiExplorerOpen] = useState(false);
 
   // Global Cmd+K / Ctrl+K keyboard shortcut listener
   useEffect(() => {
@@ -90,6 +92,7 @@ export default function App() {
         onOpenWalkthrough={() => setIsWalkthroughOpen(true)}
         onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
         onOpenAiAssistant={() => setIsAiAssistantOpen(true)}
+        onOpenApiExplorer={() => setIsApiExplorerOpen(true)}
         onShowToast={showToast}
       />
 
@@ -125,6 +128,7 @@ export default function App() {
         <InteractiveTerminal
           onShowToast={showToast}
           onOpenFridayDeploy={() => setIsFridayDeployOpen(true)}
+          onOpenApiExplorer={() => setIsApiExplorerOpen(true)}
         />
 
         <Education />
@@ -142,6 +146,7 @@ export default function App() {
       {/* Bottom Floating Developer Vitals & Coding HUD */}
       <DeveloperVitalsDock 
         onShowToast={showToast} 
+        onOpenApiExplorer={() => setIsApiExplorerOpen(true)}
       />
 
       {/* Modals & Overlays */}
@@ -188,6 +193,7 @@ export default function App() {
         onOpenWalkthrough={() => setIsWalkthroughOpen(true)}
         onOpenDeployGuide={() => setIsDeployGuideOpen(true)}
         onOpenAiAssistant={() => setIsAiAssistantOpen(true)}
+        onOpenApiExplorer={() => setIsApiExplorerOpen(true)}
         onOpenChaosDemo={() => {
           const el = document.getElementById('microservices-chaos-section');
           if (el) el.scrollIntoView({ behavior: 'smooth' });
@@ -204,6 +210,12 @@ export default function App() {
         onClose={() => setIsAiAssistantOpen(false)}
         honestMode={honestMode}
         setHonestMode={setHonestMode}
+        onShowToast={showToast}
+      />
+
+      <ApiExplorerModal
+        isOpen={isApiExplorerOpen}
+        onClose={() => setIsApiExplorerOpen(false)}
         onShowToast={showToast}
       />
 

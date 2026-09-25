@@ -4,7 +4,7 @@ import confetti from 'canvas-confetti';
 import { playClick, playKeypress, playSuccess, playAlarm } from '../utils/audio';
 import { recordTerminalCommandApi } from '../utils/api';
 
-export default function InteractiveTerminal({ onShowToast, onOpenFridayDeploy }) {
+export default function InteractiveTerminal({ onShowToast, onOpenFridayDeploy, onOpenApiExplorer }) {
   const [history, setHistory] = useState([
     {
       type: 'system',
@@ -27,6 +27,7 @@ export default function InteractiveTerminal({ onShowToast, onOpenFridayDeploy })
   • skills        - Core technical superpowers
   • why-hire      - 5 brutally honest reasons to hire me
   • rag-demo      - How my RAG + pgvector pipeline works
+  • api           - Launch in-browser REST API Explorer (Swagger-Lite)
   • git-blame     - Inspect the last 2 AM commit
   • coffee        - Check current caffeine levels
   • deploy-prod   - Attempt a dangerous Friday 5:00 PM deploy
@@ -130,6 +131,15 @@ Confetti cannon fired!`
       if (onOpenFridayDeploy) {
         setTimeout(onOpenFridayDeploy, 600);
       }
+    } else if (['api', 'swagger', 'curl', 'rest', 'api-explorer'].includes(lower)) {
+      playSuccess();
+      updatedHistory.push({
+        type: 'output',
+        text: `🌐 Launching Live In-Browser REST API Explorer (Swagger-Lite Sandbox)...\nTarget Host: https://portfolio-vert-xi-71.vercel.app\nEndpoints available: /api/chat, /api/stats, /api/simulations/sql-explain, /health`
+      });
+      if (onOpenApiExplorer) {
+        setTimeout(onOpenApiExplorer, 400);
+      }
     } else if (commandDatabase[lower]) {
       playSuccess();
       updatedHistory.push({
@@ -152,6 +162,7 @@ Confetti cannon fired!`
     { label: "bio", cmd: "bio" },
     { label: "why-hire", cmd: "why-hire" },
     { label: "rag-demo", cmd: "rag-demo" },
+    { label: "api (swagger)", cmd: "api" },
     { label: "git-blame", cmd: "git-blame" },
     { label: "coffee", cmd: "coffee" },
     { label: "deploy-prod", cmd: "deploy-prod", alert: true },

@@ -17,7 +17,8 @@ import {
   Bot,
   Zap,
   ArrowRight,
-  CornerDownLeft
+  CornerDownLeft,
+  Code2
 } from 'lucide-react';
 import { playClick, playSuccess, playKeypress } from '../utils/audio';
 
@@ -31,6 +32,7 @@ export default function CommandPalette({
   onOpenWalkthrough,
   onOpenDeployGuide,
   onOpenAiAssistant,
+  onOpenApiExplorer,
   onOpenChaosDemo,
   onOpenSqlDemo,
   onShowToast
@@ -155,6 +157,18 @@ export default function CommandPalette({
       action: () => {
         const el = document.getElementById('terminal-window-card');
         if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }
+    },
+    {
+      id: 'sandbox-api-explorer',
+      group: 'Interactive Sandboxes',
+      title: 'REST API Explorer & Swagger-Lite Sandbox',
+      subtitle: 'Test live backend endpoints (/api/chat, /api/stats, /api/simulations) in-browser with cURL generator',
+      icon: <Code2 size={16} className="text-emerald" />,
+      badge: 'LIVE REST API',
+      action: () => {
+        onClose();
+        if (onOpenApiExplorer) onOpenApiExplorer();
       }
     },
 

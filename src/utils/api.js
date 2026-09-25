@@ -3,7 +3,7 @@
 
 const PROD_BACKEND_URL = 'https://portfolio-vert-xi-71.vercel.app';
 
-const API_BASE = (
+export const API_BASE = (
   typeof window !== 'undefined' && window.location.hostname === 'localhost'
     ? 'http://localhost:5000'
     : (import.meta.env.VITE_API_URL || PROD_BACKEND_URL).replace(/\/+$/, '')
