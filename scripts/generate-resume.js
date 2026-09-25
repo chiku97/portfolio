@@ -129,7 +129,7 @@ addExperience(
   'INCANUS Technologies Pvt. Ltd.',
   'Nov 2023 – Jan 2026',
   [
-    'Engineered high-concurrency online examination platform handling 10,000+ simultaneous test-takers with zero session drops.',
+    'Engineered high-concurrency online examination platform handling 1,000+ simultaneous test-takers with zero session drops.',
     'Implemented real-time code evaluation engine with Docker container sandboxing to safely execute untrusted Python, Java, and C++ code.',
     'Cut test submission latency by 45% using Redis caching for session tokens and question state, decoupling write-heavy progress syncs.',
     'Refactored legacy monolith into RESTful microservices, reducing CI/CD pipeline deployment times from 25 minutes down to 4 minutes.'

@@ -55,7 +55,7 @@ export default function AiAssistantModal({ isOpen, onClose, honestMode, setHones
       if (honestMode) {
         return "Here's why you should hire Uttam: 1) He doesn't push untested code to prod on Friday at 4:59 PM (well, not anymore). 2) He actually knows what happens inside PostgreSQL EXPLAIN ANALYZE instead of just throwing an ORM at it. 3) He handled 10,000 concurrent examinees at INCANUS without AWS billing blowing up the company's seed round. 4) He learns any stack in 72 hours if you provide decent coffee.";
       } else {
-        return "Uttam brings 4+ years of proven production experience engineering distributed backend systems, AI retrieval pipelines, and high-throughput architectures. At SnapBizz, he spearheaded the IRCTC ticketing WhatsApp integrations and enterprise vector RAG search. At INCANUS, he architected an exam engine serving 10,000+ concurrent users with zero downtime. He combines deep database optimization (pgvector, Elasticsearch, Redis) with modern React frontend agility.";
+        return "Uttam brings 4+ years of proven production experience engineering distributed backend systems, AI retrieval pipelines, and high-throughput architectures. At SnapBizz, he spearheaded the IRCTC ticketing WhatsApp integrations and enterprise vector RAG search. At INCANUS, he architected an exam engine serving 1,000+ concurrent users with zero downtime. He combines deep database optimization (pgvector, Elasticsearch, Redis) with modern React frontend agility.";
       }
     }
 

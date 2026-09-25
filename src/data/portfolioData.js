@@ -20,7 +20,7 @@ export const personalInfo = {
   },
   stats: [
     { label: "Production Experience", value: "3+ Years", detail: "RetailTech, EdTech & Healthcare" },
-    { label: "Concurrent Examinees Handled", value: "10,000+", detail: "Real-time evaluation sandboxes" },
+    { label: "Concurrent Examinees Handled", value: "1,000+", detail: "Real-time evaluation sandboxes" },
     { label: "Search & Database Response", value: "Sub-20ms", detail: "Elasticsearch BM25 + pgvector (RRF) across 100k+ SKUs" },
     { label: "Production RAG Pipelines", value: "Hybrid RRF", detail: "Elasticsearch BM25 + PostgreSQL pgvector" }
   ]
@@ -168,7 +168,7 @@ export const projects = [
     featured: true,
     summary: {
       honest: "A platform built to evaluate thousands of candidate submissions while thwarting creative attempts to escape Docker containers, allocate all system RAM, or run fork bombs.",
-      pro: "Engineered the backend evaluation engine for online programming assessments handling 10,000+ simultaneous students. Sandboxes untrusted code execution inside ephemeral Docker containers with CPU/RAM throttles."
+      pro: "Engineered the backend evaluation engine for online programming assessments handling 1,000+ simultaneous students. Sandboxes untrusted code execution inside ephemeral Docker containers with CPU/RAM throttles."
     },
     problemStatement: "Running untrusted user code on web servers is dangerous (fork bombs, memory hogging, file deletion). The system required sub-second evaluation feedback without risking server compromise.",
     architectureSteps: [

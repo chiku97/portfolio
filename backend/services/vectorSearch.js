@@ -51,9 +51,9 @@ export const RESUME_CHUNKS = [
   },
   {
     id: "incanus_eval_engine",
-    title: "INCANUS: High-Concurrency Assessment Engine (10,000+ Students)",
+    title: "INCANUS: High-Concurrency Assessment Engine (1,000+ Students)",
     section: "Work Experience - INCANUS",
-    text: "At INCANUS Technologies, Uttam engineered the high-concurrency online evaluation engine for coding assessments handling 10,000+ simultaneous test-taking students with zero session drops. Handled nationwide engineering recruitment drives without downtime.",
+    text: "At INCANUS Technologies, Uttam engineered the high-concurrency online evaluation engine for coding assessments handling 1,000+ simultaneous test-taking students with zero session drops. Handled nationwide engineering recruitment drives without downtime.",
     keywords: [
       "incanus", "examination", "assessment", "high", "concurrency", "10000", "concurrent", "students",
       "examinees", "test", "takers", "zero", "session", "drops", "evaluation", "engine", "scale", "recruitment"

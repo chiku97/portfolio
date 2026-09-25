@@ -44,7 +44,7 @@ export const CANDIDATE_PROFILE = {
       company: "INCANUS Technologies",
       role: "Backend & Systems Engineer",
       highlights: [
-        "Built the high-concurrency online evaluation engine for coding assessments handling 10,000+ concurrent students.",
+        "Built the high-concurrency online evaluation engine for coding assessments handling 1,000+ concurrent students.",
         "Sandboxed untrusted student code execution inside ephemeral Docker containers with CPU/RAM throttles.",
         "Engineered Redis priority job queues and real-time evaluation telemetry with sub-2s feedback."
       ]
@@ -134,7 +134,7 @@ PROFESSIONAL EXPERIENCE:
    Role: Backend & Systems Engineer
    Period: Nov 2023 – Jan 2026 (1.2 Years)
    Key Projects & Responsibilities:
-   • High-Concurrency Evaluation Engine: Built the high-concurrency online evaluation engine for coding assessments handling 10,000+ simultaneous test-taking students with zero session drops.
+   • High-Concurrency Evaluation Engine: Built the high-concurrency online evaluation engine for coding assessments handling 1,000+ simultaneous test-taking students with zero session drops.
    • Docker Code Execution Sandbox: Safely executed untrusted candidate code (Python, Java, C++, JS) inside ephemeral Docker containers with strict CPU throttles, 128MB RAM caps, disabled network access, and zero container escapes.
    • Priority Queues & Telemetry: Engineered Redis priority job queues and real-time evaluation telemetry with sub-2s execution feedback. Eliminated critical N+1 queries in MySQL, achieving a 40% reduction in API response times under high concurrency.
    • Automated CI/CD & Testing: Automated CI/CD pipelines using Drone CI and Docker, accompanied by end-to-end Cypress test suites and Mocha/Chai backend unit tests, reducing deployment cycles from 25 minutes down to 4 minutes.
@@ -390,7 +390,7 @@ function generateDynamicResponse(query, honestMode) {
     return {
       text: honestMode
         ? `Why hire Uttam? 1) He doesn't push untested code to production on Friday at 4:59 PM. 2) He knows EXPLAIN ANALYZE and database indexing rather than just throwing ORMs at slow queries. 3) He handled 10,000 concurrent examinees at INCANUS without breaking servers. 4) He learns new stacks in days and communicates clearly.`
-        : `Uttam brings 3+ years of production engineering experience combining deep backend microservices (Node.js, Go), database optimization (PostgreSQL covering indexes, Redis caching), and AI search (pgvector hybrid RAG). He has proven experience handling 10,000+ concurrent users with zero downtime.`,
+        : `Uttam brings 3+ years of production engineering experience combining deep backend microservices (Node.js, Go), database optimization (PostgreSQL covering indexes, Redis caching), and AI search (pgvector hybrid RAG). He has proven experience handling 1,000+ concurrent users with zero downtime.`,
       sources: ["Candidate Overview"]
     };
   }
