@@ -7,7 +7,7 @@ export default function InteractiveTerminal({ onShowToast, onOpenFridayDeploy })
   const [history, setHistory] = useState([
     {
       type: 'system',
-      text: `🚀 Uttam Mahto Production Node Shell v3.4.1 (x86_64-cloud-linux)\nType "help" or click any suggested commands below to explore.`
+      text: `🚀 Production Node Shell v3.4.1 (x86_64-cloud-linux)\nType "help" or click any suggested commands below to explore.`
     }
   ]);
   const [inputVal, setInputVal] = useState('');
@@ -22,10 +22,10 @@ export default function InteractiveTerminal({ onShowToast, onOpenFridayDeploy })
 
   const commandDatabase = {
     help: `Available commands:
-  • bio           - Who is Uttam? (The quick rundown)
+  • bio           - Who am I? (The quick rundown)
   • skills        - Core technical superpowers
-  • why-hire      - 5 brutally honest reasons to hire Uttam
-  • rag-demo      - How Uttam's RAG + pgvector pipeline works
+  • why-hire      - 5 brutally honest reasons to hire me
+  • rag-demo      - How my RAG + pgvector pipeline works
   • git-blame     - Inspect the last 2 AM commit
   • coffee        - Check current caffeine levels
   • deploy-prod   - Attempt a dangerous Friday 5:00 PM deploy
@@ -51,7 +51,7 @@ DevOps    : Docker, AWS (EC2/S3), Drone CI, Jenkins, Nginx
 Testing   : Cypress, Mocha, Chai, Jest, Postman
 Monitoring: Grafana, New Relic`,
 
-    "why-hire": `[5 REASONS TO HIRE UTTAM]
+    "why-hire": `[5 REASONS TO HIRE ME]
 1. Doesn't write 'SELECT *' on tables with 10 million rows.
 2. Built RAG pipelines that actually work in production (hybrid search with pgvector & Elasticsearch).
 3. Handled 10k+ concurrent examinees without server meltdown.
@@ -67,7 +67,7 @@ User Query: "Find invoices with misspellings or semantic SKU matches"
  └── Output -> 100% grounded response with exact citations & 0 hallucination.`,
 
     "git-blame": `commit a7f903e1c2b5d4 (HEAD -> main)
-Author: Uttam Kumar Mahto <mahtouttamkumar01@gmail.com>
+Author: Uttam Kumar Mahto <uttamkumar9708@gmail.com>
 Date:   Thu 02:47:19 +0530
     "fix: resolved race condition in inventory lock that only appeared during flash sales"
 Status: Verified by 42 passing unit tests.`,
@@ -82,13 +82,13 @@ Warning: Do not approach if caffeine drops below 15%.`,
 [SYSTEM] Running Cypress E2E test suite... [PASS]
 [SYSTEM] Running Mocha/Chai backend unit tests... [PASS]
 [SYSTEM] Rolling update started with zero downtime...
-[RESULT] Production updated safely! (Because Uttam writes automated tests.)`,
+[RESULT] Production updated safely! (Because I write automated tests.)`,
 
     "sudo hire": `🎉 PERMISSION GRANTED!
 Initializing VIP candidate onboarding sequence...
-Direct Email: mahtouttamkumar01@gmail.com
+Direct Email: uttamkumar9708@gmail.com
 Phone: +91-8147747120
-LinkedIn: https://linkedin.com/in/uttam-b160bb197
+LinkedIn: https://linkedin.com/in/uttam-kumar-mahto-2b476717a
 Confetti cannon fired!`
   };
 
@@ -114,7 +114,7 @@ Confetti cannon fired!`
         spread: 80,
         origin: { y: 0.6 }
       });
-      onShowToast("🎉 Excellent choice! Connecting to Uttam Mahto...");
+      onShowToast("🎉 Excellent choice! Connecting to me...");
       updatedHistory.push({
         type: 'output',
         text: commandDatabase["sudo hire"]

@@ -86,7 +86,7 @@ export default function FridayDeployModal({ isOpen, onClose }) {
                 <span>WARNING: The weekend starts in 10 minutes. Management asked for a 'quick small hotfix'.</span>
               </div>
               <p className="idle-text">
-                Most developers panic at Friday deployments. But Uttam builds systems with 
+                Most developers panic at Friday deployments. But I build systems with 
                 <strong> automated CI/CD pipelines, Cypress E2E tests, Mocha unit tests, and Docker containerization</strong>.
               </p>
               <button onClick={startEmergencyDeploy} className="btn btn-danger-glow w-full btn-lg">
@@ -122,7 +122,7 @@ export default function FridayDeployModal({ isOpen, onClose }) {
                 ))}
               </div>
               <div className="saved-verdict">
-                <h4>Why Hiring Uttam Is The Safe Bet:</h4>
+                <h4>Why Hiring Me Is The Safe Bet:</h4>
                 <p>
                   Because when you write clean architectures, automated regression suites, and Dockerized rollouts, 
                   deploying code is routine engineering, not an existential crisis.
@@ -133,7 +133,7 @@ export default function FridayDeployModal({ isOpen, onClose }) {
                     onClick={() => { playClick(); onClose(); }} 
                     className="btn btn-cyan"
                   >
-                    Hire Uttam Kumar Mahto
+                    Get In Touch / Hire Me
                   </a>
                   <button 
                     onClick={() => { playClick(); setPhase('idle'); }} 

@@ -123,7 +123,7 @@ export default function HeroFace({ honestMode, onShowToast }) {
             <div className="thought-header">
               <span className="thought-icon">{honestMode ? "☕" : "💡"}</span>
               <span className="thought-author font-mono">
-                {honestMode ? "Uttam's Brain (Unfiltered)" : "Engineering Insight"}
+                {honestMode ? "My Brain (Unfiltered)" : "Engineering Insight"}
               </span>
             </div>
             <p className="thought-content">
@@ -159,7 +159,7 @@ export default function HeroFace({ honestMode, onShowToast }) {
               <span className="status-label">SPECIALTY:</span>
               <span className="status-val">High-Throughput Backends</span>
             </div>
-            <div className="clicks-counter" title="Total clicks on Uttam's face">
+            <div className="clicks-counter" title="Total clicks on my avatar">
               <Heart size={11} className="heart-icon text-rose" />
               <span>{clickCount}</span>
             </div>

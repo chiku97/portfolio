@@ -65,11 +65,11 @@ export default function PortfolioWalkthrough({
       content: (
         <div>
           <p className="walkthrough-desc">
-            Custom 3D Pixar-style Chibi developer avatar modeled directly from Uttam's real workplace photo.
+            Custom 3D Pixar-style Chibi developer avatar modeled directly from my real workplace photo.
           </p>
           <ul className="walkthrough-checklist">
             <li><strong>3D Mouse Parallax:</strong> Move your cursor over the card to tilt it in real-time 3D space with specular lighting.</li>
-            <li><strong>Interactive Brain:</strong> Click on his face to cycle through his thoughts and fire celebratory confetti!</li>
+            <li><strong>Interactive Brain:</strong> Click on my avatar's face to cycle through thoughts and fire celebratory confetti!</li>
           </ul>
         </div>
       )
@@ -82,7 +82,7 @@ export default function PortfolioWalkthrough({
       content: (
         <div>
           <p className="walkthrough-desc">
-            A live simulation of the production architecture Uttam built at Sanpbizz CloudTech:
+            A live simulation of the production architecture I built at Sanpbizz CloudTech:
           </p>
           <ul className="walkthrough-checklist">
             <li><strong>Elasticsearch BM25:</strong> Solves cashier typos (e.g. "paracetmol 50mg" → "Paracetamol 500mg").</li>
@@ -144,7 +144,7 @@ export default function PortfolioWalkthrough({
       content: (
         <div>
           <p className="walkthrough-desc">
-            <strong>🤖 Made with AI:</strong> Code, distributed architecture, and data pipelines by Uttam. CSS and styling generated with LLM assistance.
+            <strong>🤖 Made with AI:</strong> Code, distributed architecture, and data pipelines engineered by me. CSS and styling generated with LLM assistance.
           </p>
           <div className="walkthrough-quote font-mono">
             "Please don't judge the portfolio styling — judge my production SQL and 10,000 QPS backend microservices instead!"

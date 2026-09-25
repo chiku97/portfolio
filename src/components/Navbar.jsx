@@ -10,7 +10,9 @@ import {
   Briefcase,
   ArrowUpRight,
   Sparkles,
-  HelpCircle
+  HelpCircle,
+  Search,
+  Bot
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { personalInfo } from '../data/portfolioData';
@@ -21,6 +23,8 @@ export default function Navbar({
   setHonestMode, 
   onOpenResume, 
   onOpenWalkthrough,
+  onOpenCommandPalette,
+  onOpenAiAssistant,
   onShowToast 
 }) {
   const [scrolled, setScrolled] = useState(false);
@@ -203,6 +207,28 @@ export default function Navbar({
             </button>
           </div>
 
+          {/* Quick Command Palette Trigger (⌘K) */}
+          <button
+            id="nav-cmd-btn"
+            onClick={() => { playClick(); onOpenCommandPalette && onOpenCommandPalette(); }}
+            className="btn-dock-cmd font-mono"
+            title="Open Quick Command Palette (⌘K / Ctrl+K)"
+          >
+            <Search size={12} className="text-cyan" />
+            <span className="cmd-label">⌘K</span>
+          </button>
+
+          {/* AI Recruiter Copilot Trigger */}
+          <button
+            id="nav-ai-btn"
+            onClick={() => { playClick(); onOpenAiAssistant && onOpenAiAssistant(); }}
+            className="btn-dock-ai font-mono"
+            title="Chat with Chiku AI (Interactive Technical Recruiter Copilot)"
+          >
+            <Bot size={12} className="text-cyan" />
+            <span className="ai-label">Ask AI</span>
+          </button>
+
           {/* Interactive Walkthrough Tour Trigger */}
           <button
             id="nav-tour-btn"
@@ -295,6 +321,24 @@ export default function Navbar({
                 </button>
               </div>
 
+              <div className="mobile-extra-actions">
+                <button 
+                  onClick={() => { onOpenCommandPalette && onOpenCommandPalette(); setMobileMenuOpen(false); }} 
+                  className="btn btn-subtle w-full justify-center font-mono"
+                >
+                  <Search size={14} className="text-cyan" />
+                  <span>Command Palette (⌘K)</span>
+                </button>
+
+                <button 
+                  onClick={() => { onOpenAiAssistant && onOpenAiAssistant(); setMobileMenuOpen(false); }} 
+                  className="btn btn-subtle w-full justify-center font-mono"
+                >
+                  <Bot size={14} className="text-cyan" />
+                  <span>Chat with Chiku AI</span>
+                </button>
+              </div>
+
               <button 
                 onClick={() => { onOpenWalkthrough(); setMobileMenuOpen(false); }} 
                 className="btn btn-subtle w-full justify-center"
@@ -339,14 +383,14 @@ export default function Navbar({
           -webkit-backdrop-filter: blur(24px) saturate(180%);
           border: 1px solid rgba(255, 255, 255, 0.08);
           border-radius: var(--radius-full);
-          padding: 5px 10px 5px 12px;
+          padding: 6px 14px;
           box-shadow: 
             0 16px 38px -12px rgba(0, 0, 0, 0.75), 
             inset 0 1px 0 rgba(255, 255, 255, 0.12),
             0 0 18px rgba(56, 189, 248, 0.04);
           transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
-          max-width: 960px;
-          width: auto;
+          max-width: 1320px;
+          width: fit-content;
         }
 
         .nav-dock-scrolled {
@@ -598,6 +642,62 @@ export default function Navbar({
           border-color: rgba(245, 158, 11, 0.5);
           color: #ffffff;
           transform: translateY(-1px);
+        }
+
+        /* Command Palette Dock Button */
+        .btn-dock-cmd {
+          display: inline-flex;
+          align-items: center;
+          gap: 5px;
+          padding: 4px 8px;
+          border-radius: var(--radius-full);
+          background: rgba(56, 189, 248, 0.08);
+          border: 1px solid rgba(56, 189, 248, 0.22);
+          color: #cbd5e1;
+          font-size: 0.72rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.15s ease;
+          flex-shrink: 0;
+        }
+
+        .btn-dock-cmd:hover {
+          background: rgba(56, 189, 248, 0.16);
+          border-color: var(--accent-cyan);
+          color: #fff;
+          transform: translateY(-1px);
+        }
+
+        /* AI Recruiter Copilot Dock Button */
+        .btn-dock-ai {
+          display: inline-flex;
+          align-items: center;
+          gap: 5px;
+          padding: 4px 10px;
+          border-radius: var(--radius-full);
+          background: linear-gradient(135deg, rgba(2, 132, 199, 0.2), rgba(99, 102, 241, 0.2));
+          border: 1px solid rgba(56, 189, 248, 0.35);
+          color: #e0f2fe;
+          font-size: 0.74rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.15s ease;
+          flex-shrink: 0;
+        }
+
+        .btn-dock-ai:hover {
+          background: linear-gradient(135deg, rgba(2, 132, 199, 0.35), rgba(99, 102, 241, 0.35));
+          border-color: var(--accent-cyan);
+          color: #fff;
+          transform: translateY(-1px);
+          box-shadow: 0 0 14px rgba(56, 189, 248, 0.25);
+        }
+
+        .mobile-extra-actions {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          width: 100%;
         }
 
         .animate-spin-slow {

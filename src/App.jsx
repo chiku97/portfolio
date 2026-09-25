@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SpotlightCursor from './components/SpotlightCursor';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -6,6 +6,8 @@ import TechMarquee from './components/TechMarquee';
 import Experience from './components/Experience';
 import Projects from './components/Projects';
 import RagArchitectureDemo from './components/RagArchitectureDemo';
+import MicroservicesChaosDemo from './components/MicroservicesChaosDemo';
+import SqlOptimizerDemo from './components/SqlOptimizerDemo';
 import SkillsMatrix from './components/SkillsMatrix';
 import InteractiveTerminal from './components/InteractiveTerminal';
 import Education from './components/Education';
@@ -16,6 +18,9 @@ import FridayDeployModal from './components/FridayDeployModal';
 import GitHubDeployGuideModal from './components/GitHubDeployGuideModal';
 import PortfolioWalkthrough from './components/PortfolioWalkthrough';
 import MobileWarningModal from './components/MobileWarningModal';
+import CommandPalette from './components/CommandPalette';
+import AiAssistantModal from './components/AiAssistantModal';
+import DeveloperVitalsDock from './components/DeveloperVitalsDock';
 
 export default function App() {
   const [honestMode, setHonestMode] = useState(true);
@@ -25,9 +30,23 @@ export default function App() {
   const [isDeployGuideOpen, setIsDeployGuideOpen] = useState(false);
   const [isWalkthroughOpen, setIsWalkthroughOpen] = useState(false);
   const [isMobileWarningOpen, setIsMobileWarningOpen] = useState(false);
+  const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
+  const [isAiAssistantOpen, setIsAiAssistantOpen] = useState(false);
 
-  // Auto-detect mobile devices on load and display the humorous workstation recommendation modal
-  React.useEffect(() => {
+  // Global Cmd+K / Ctrl+K keyboard shortcut listener
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        setIsCommandPaletteOpen(prev => !prev);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  // Auto-detect mobile devices on load and display humorous workstation recommendation
+  useEffect(() => {
     if (typeof window === 'undefined') return;
 
     const isSmallScreen = window.innerWidth <= 768;
@@ -69,6 +88,8 @@ export default function App() {
         onOpenResume={() => setIsResumeOpen(true)}
         onOpenFridayDeploy={() => setIsFridayDeployOpen(true)}
         onOpenWalkthrough={() => setIsWalkthroughOpen(true)}
+        onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
+        onOpenAiAssistant={() => setIsAiAssistantOpen(true)}
         onShowToast={showToast}
       />
 
@@ -92,7 +113,12 @@ export default function App() {
           honestMode={honestMode} 
         />
 
+        {/* System Architecture Showcases */}
         <RagArchitectureDemo />
+
+        <MicroservicesChaosDemo />
+
+        <SqlOptimizerDemo />
 
         <SkillsMatrix />
 
@@ -111,6 +137,11 @@ export default function App() {
       {/* Footer */}
       <Footer
         onOpenDeployGuide={() => setIsDeployGuideOpen(true)}
+      />
+
+      {/* Bottom Floating Developer Vitals & Coding HUD */}
+      <DeveloperVitalsDock 
+        onShowToast={showToast} 
       />
 
       {/* Modals & Overlays */}
@@ -144,6 +175,35 @@ export default function App() {
       <MobileWarningModal
         isOpen={isMobileWarningOpen}
         onClose={() => setIsMobileWarningOpen(false)}
+        onShowToast={showToast}
+      />
+
+      <CommandPalette
+        isOpen={isCommandPaletteOpen}
+        onClose={() => setIsCommandPaletteOpen(false)}
+        honestMode={honestMode}
+        setHonestMode={setHonestMode}
+        onOpenResume={() => setIsResumeOpen(true)}
+        onOpenFridayDeploy={() => setIsFridayDeployOpen(true)}
+        onOpenWalkthrough={() => setIsWalkthroughOpen(true)}
+        onOpenDeployGuide={() => setIsDeployGuideOpen(true)}
+        onOpenAiAssistant={() => setIsAiAssistantOpen(true)}
+        onOpenChaosDemo={() => {
+          const el = document.getElementById('microservices-chaos-section');
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }}
+        onOpenSqlDemo={() => {
+          const el = document.getElementById('sql-optimizer-section');
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }}
+        onShowToast={showToast}
+      />
+
+      <AiAssistantModal
+        isOpen={isAiAssistantOpen}
+        onClose={() => setIsAiAssistantOpen(false)}
+        honestMode={honestMode}
+        setHonestMode={setHonestMode}
         onShowToast={showToast}
       />
 

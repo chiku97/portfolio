@@ -1,40 +1,76 @@
 import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Copy, Check, Send, ArrowUpRight } from 'lucide-react';
+import { Mail, Phone, MapPin, Copy, Check, Send, ArrowUpRight, ExternalLink, RotateCcw } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from './Icons';
 import { personalInfo } from '../data/portfolioData';
+import { playClick, playSuccess } from '../utils/audio';
 
 export default function Contact({ onShowToast }) {
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [copiedPhone, setCopiedPhone] = useState(false);
   const [form, setForm] = useState({ name: '', email: '', message: '' });
+  const [submitted, setSubmitted] = useState(false);
+  const [gmailLink, setGmailLink] = useState('');
 
   const copyEmail = () => {
     navigator.clipboard.writeText(personalInfo.email);
     setCopiedEmail(true);
-    onShowToast(`Copied ${personalInfo.email}`);
+    if (onShowToast) onShowToast(`Copied ${personalInfo.email}`);
     setTimeout(() => setCopiedEmail(false), 2000);
   };
 
   const copyPhone = () => {
     navigator.clipboard.writeText(personalInfo.phone);
     setCopiedPhone(true);
-    onShowToast(`Copied ${personalInfo.phone}`);
+    if (onShowToast) onShowToast(`Copied ${personalInfo.phone}`);
     setTimeout(() => setCopiedPhone(false), 2000);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const subject = encodeURIComponent(`Engineering Opportunity / Ingestion from ${form.name || 'Hiring Manager'}`);
-    const body = encodeURIComponent(`Hi Uttam,\n\nName: ${form.name}\nEmail: ${form.email}\n\nMessage:\n${form.message}\n\nBest,\n${form.name}`);
-    window.location.href = `mailto:${personalInfo.email}?subject=${subject}&body=${body}`;
-    onShowToast("Opening your email client...");
+    playSuccess();
+
+    const subject = `Engineering Opportunity / Ingestion from ${form.name || 'Hiring Manager'}`;
+    const body = `Hi,\n\nName: ${form.name}\nEmail: ${form.email}\n\nMessage:\n${form.message}\n\nBest regards,\n${form.name}`;
+
+    // 1. Copy message payload to clipboard as an immediate fail-safe
+    try {
+      navigator.clipboard.writeText(`To: ${personalInfo.email}\nSubject: ${subject}\n\n${body}`);
+    } catch (err) {}
+
+    // 2. Generate web-mail URLs
+    const encodedSubject = encodeURIComponent(subject);
+    const encodedBody = encodeURIComponent(body);
+    const mailtoUrl = `mailto:${personalInfo.email}?subject=${encodedSubject}&body=${encodedBody}`;
+    const webGmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(personalInfo.email)}&su=${encodedSubject}&body=${encodedBody}`;
+    
+    setGmailLink(webGmailUrl);
+    setSubmitted(true);
+
+    // 3. Attempt native mail client trigger
+    try {
+      const a = document.createElement('a');
+      a.href = mailtoUrl;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    } catch (err) {}
+
+    if (onShowToast) {
+      onShowToast("🚀 Message drafted! Copied to clipboard & ready in email client.");
+    }
+  };
+
+  const handleReset = () => {
+    playClick();
+    setSubmitted(false);
+    setForm({ name: '', email: '', message: '' });
   };
 
   return (
     <section id="contact" className="section">
       <div className="container">
         <div className="section-eyebrow">Get In Touch</div>
-        <h2 className="section-heading">Contact & Opportunities</h2>
+        <h2 className="section-heading">Contact &amp; Opportunities</h2>
         <p className="section-subtext">
           I'm currently considering full-time software engineering roles in Bangalore or remote. 
           If you have an engineering opening or want to talk distributed systems and search, feel free to reach out.
@@ -75,13 +111,13 @@ export default function Contact({ onShowToast }) {
             </div>
 
             <div className="direct-socials">
-              <a href={personalInfo.linkedin} target="_blank" rel="noreferrer" className="btn btn-subtle btn-sm">
+              <a href={personalInfo.linkedin} target="_blank" rel="noreferrer" className="btn btn-subtle btn-sm font-mono">
                 <LinkedinIcon size={14} />
                 <span>LinkedIn Profile</span>
                 <ArrowUpRight size={12} />
               </a>
 
-              <a href={personalInfo.github} target="_blank" rel="noreferrer" className="btn btn-subtle btn-sm">
+              <a href={personalInfo.github} target="_blank" rel="noreferrer" className="btn btn-subtle btn-sm font-mono">
                 <GithubIcon size={14} />
                 <span>GitHub Repos</span>
                 <ArrowUpRight size={12} />
@@ -92,49 +128,83 @@ export default function Contact({ onShowToast }) {
           {/* Quick email composer */}
           <div className="card composer-card">
             <h3 className="direct-title font-mono">Send a Direct Note</h3>
-            <form onSubmit={handleSubmit} className="contact-form">
-              <div className="form-row">
-                <div className="form-group">
-                  <label className="form-label font-mono">Your Name</label>
-                  <input
-                    type="text"
-                    required
-                    placeholder="e.g. Alex Chen"
-                    value={form.name}
-                    onChange={(e) => setForm({ ...form, name: e.target.value })}
-                    className="form-input"
-                  />
+            
+            {submitted ? (
+              <div className="contact-success-state">
+                <div className="success-icon-box">
+                  <Check size={24} className="text-emerald" />
                 </div>
-                <div className="form-group">
-                  <label className="form-label font-mono">Your Email</label>
-                  <input
-                    type="email"
-                    required
-                    placeholder="e.g. alex@company.com"
-                    value={form.email}
-                    onChange={(e) => setForm({ ...form, email: e.target.value })}
-                    className="form-input"
-                  />
+                <h4 className="success-title">Message Prepared &amp; Copied!</h4>
+                <p className="success-desc">
+                  Your note has been copied to your clipboard and drafted in your default email client. You can also open it directly in Gmail with one click:
+                </p>
+
+                <div className="success-actions">
+                  <a 
+                    href={gmailLink} 
+                    target="_blank" 
+                    rel="noreferrer" 
+                    className="btn btn-solid btn-sm font-mono"
+                    onClick={playClick}
+                  >
+                    <Mail size={14} />
+                    <span>Open in Gmail Web ↗</span>
+                  </a>
+
+                  <button 
+                    onClick={handleReset} 
+                    className="btn btn-subtle btn-sm font-mono"
+                  >
+                    <RotateCcw size={13} />
+                    <span>Send Another Note</span>
+                  </button>
                 </div>
               </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="contact-form">
+                <div className="form-row">
+                  <div className="form-group">
+                    <label className="form-label font-mono">Your Name</label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="e.g. Alex Chen"
+                      value={form.name}
+                      onChange={(e) => setForm({ ...form, name: e.target.value })}
+                      className="form-input"
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label className="form-label font-mono">Your Email</label>
+                    <input
+                      type="email"
+                      required
+                      placeholder="e.g. alex@company.com"
+                      value={form.email}
+                      onChange={(e) => setForm({ ...form, email: e.target.value })}
+                      className="form-input"
+                    />
+                  </div>
+                </div>
 
-              <div className="form-group">
-                <label className="form-label font-mono">Message</label>
-                <textarea
-                  required
-                  rows={4}
-                  placeholder="Tell me about the engineering team, tech stack, or problem..."
-                  value={form.message}
-                  onChange={(e) => setForm({ ...form, message: e.target.value })}
-                  className="form-input form-textarea"
-                />
-              </div>
+                <div className="form-group">
+                  <label className="form-label font-mono">Message</label>
+                  <textarea
+                    required
+                    rows={4}
+                    placeholder="Tell me about the engineering team, tech stack, or problem..."
+                    value={form.message}
+                    onChange={(e) => setForm({ ...form, message: e.target.value })}
+                    className="form-input form-textarea"
+                  />
+                </div>
 
-              <button type="submit" className="btn btn-solid w-full">
-                <Send size={14} />
-                <span>Send Message to Uttam</span>
-              </button>
-            </form>
+                <button type="submit" className="btn btn-solid w-full">
+                  <Send size={14} />
+                  <span>Send Direct Message</span>
+                </button>
+              </form>
+            )}
           </div>
         </div>
       </div>
@@ -253,6 +323,47 @@ export default function Contact({ onShowToast }) {
         .form-textarea {
           resize: vertical;
           min-height: 90px;
+        }
+
+        .contact-success-state {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          padding: 20px 10px;
+          gap: 12px;
+        }
+
+        .success-icon-box {
+          width: 48px;
+          height: 48px;
+          border-radius: 50%;
+          background: rgba(16, 185, 129, 0.15);
+          border: 1px solid rgba(16, 185, 129, 0.35);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .success-title {
+          font-size: 1.05rem;
+          color: #fff;
+          font-weight: 700;
+        }
+
+        .success-desc {
+          font-size: 0.84rem;
+          color: #94a3b8;
+          line-height: 1.5;
+          max-width: 360px;
+        }
+
+        .success-actions {
+          display: flex;
+          gap: 10px;
+          margin-top: 10px;
+          flex-wrap: wrap;
+          justify-content: center;
         }
 
         .text-emerald { color: var(--accent-emerald); }
