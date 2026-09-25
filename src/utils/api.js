@@ -80,6 +80,11 @@ export async function recordPageViewApi() {
   return await fetchApi('/api/stats/view', { method: 'POST' });
 }
 
+export async function recordThoughtSyncApi() {
+  const result = await fetchApi('/api/stats/thought-sync', { method: 'POST' });
+  return result?.count || result?.devThoughtsSynced || null;
+}
+
 export async function recordTerminalCommandApi(command) {
   return await fetchApi('/api/stats/terminal', {
     method: 'POST',

@@ -4,6 +4,7 @@ import {
   getStats, 
   recordPageView, 
   recordTerminalRun, 
+  recordThoughtSync,
   likeProject, 
   endorseSkill 
 } from '../services/db.js';
@@ -25,6 +26,26 @@ router.post('/view', async (req, res) => {
   try {
     const count = await recordPageView();
     res.json({ success: true, pageViews: count });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// POST /api/stats/thought-sync - Record dev thought sync
+router.post('/thought-sync', async (req, res) => {
+  try {
+    const count = await recordThoughtSync();
+    res.json({ success: true, count, devThoughtsSynced: count });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// POST /api/stats/thought - Alias for dev thought sync
+router.post('/thought', async (req, res) => {
+  try {
+    const count = await recordThoughtSync();
+    res.json({ success: true, count, devThoughtsSynced: count });
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });
   }

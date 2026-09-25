@@ -12,6 +12,7 @@ const INITIAL_DATA = {
   pageViews: 1420,
   terminalCommandsRun: 284,
   aiChatsHandled: 156,
+  devThoughtsSynced: 188,
   projectLikes: {
     'rag-analytics-chatbot': 48,
     'coding-assessment-platform': 64,
@@ -112,6 +113,47 @@ async function incrementPersistentViews() {
   return (cache?.pageViews || BASELINE_VIEWS) + 1;
 }
 
+const THOUGHTS_COUNTER_KEY = 'uttam_portfolio_thoughts_chiku97';
+const BASELINE_THOUGHT_SYNCS = 188;
+
+// Zero-database persistent thought sync counter reader with timeout & local fallback
+async function fetchPersistentThoughtSyncs() {
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 2500);
+    const res = await fetch(`${COUNTER_API_BASE}/get/${THOUGHTS_COUNTER_KEY}`, { signal: controller.signal });
+    clearTimeout(timeout);
+    if (res.ok) {
+      const data = await res.json();
+      if (typeof data.value === 'number') {
+        return BASELINE_THOUGHT_SYNCS + data.value;
+      }
+    }
+  } catch {
+    // Fallback gracefully to local cache
+  }
+  return cache?.devThoughtsSynced || BASELINE_THOUGHT_SYNCS;
+}
+
+// Zero-database persistent thought sync atomic increment
+async function incrementPersistentThoughtSyncs() {
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 2500);
+    const res = await fetch(`${COUNTER_API_BASE}/hit/${THOUGHTS_COUNTER_KEY}`, { signal: controller.signal });
+    clearTimeout(timeout);
+    if (res.ok) {
+      const data = await res.json();
+      if (typeof data.value === 'number') {
+        return BASELINE_THOUGHT_SYNCS + data.value;
+      }
+    }
+  } catch {
+    // Fallback gracefully to local cache increment
+  }
+  return (cache?.devThoughtsSynced || BASELINE_THOUGHT_SYNCS) + 1;
+}
+
 const BASELINE_PROJECT_LIKES = {
   'rag-analytics-chatbot': 48,
   'coding-assessment-platform': 64,
@@ -183,16 +225,20 @@ async function fetchAllPersistentProjectLikes() {
 
 export async function getStats() {
   const db = await getDb();
-  const [persistentViews, persistentLikes] = await Promise.all([
+  const [persistentViews, persistentLikes, persistentThoughts] = await Promise.all([
     fetchPersistentViews(),
-    fetchAllPersistentProjectLikes()
+    fetchAllPersistentProjectLikes(),
+    fetchPersistentThoughtSyncs()
   ]);
   db.pageViews = persistentViews;
   db.projectLikes = { ...db.projectLikes, ...persistentLikes };
+  db.devThoughtsSynced = persistentThoughts;
   return {
     pageViews: persistentViews,
     terminalCommandsRun: db.terminalCommandsRun,
     aiChatsHandled: db.aiChatsHandled,
+    devThoughtsSynced: persistentThoughts,
+    thoughtSyncCount: persistentThoughts,
     projectLikes: db.projectLikes,
     endorsements: db.endorsements,
     totalMessagesReceived: db.contactMessages.length,
@@ -207,6 +253,15 @@ export async function recordPageView() {
   db.visitorAnalytics.lastActive = new Date().toISOString();
   saveDb();
   return newViews;
+}
+
+export async function recordThoughtSync() {
+  const db = await getDb();
+  const newCount = await incrementPersistentThoughtSyncs();
+  db.devThoughtsSynced = newCount;
+  db.visitorAnalytics.lastActive = new Date().toISOString();
+  saveDb();
+  return newCount;
 }
 
 export async function recordTerminalRun(cmd = '') {

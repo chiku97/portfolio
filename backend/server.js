@@ -62,6 +62,7 @@ app.get(['/', '/health', '/api/health'], async (req, res) => {
     statsOverview: {
       pageViews: stats.pageViews || 0,
       totalLikes: Object.values(stats.projectLikes || {}).reduce((a, b) => a + b, 0),
+      devThoughts: stats.devThoughtsSynced || 0,
       aiChats: stats.aiChatsHandled || 0
     }
   });
@@ -82,6 +83,7 @@ app.use((req, res) => {
       'POST /api/chat',
       'GET  /api/stats',
       'POST /api/stats/view',
+      'POST /api/stats/thought-sync',
       'POST /api/stats/terminal',
       'POST /api/stats/projects/:id/like',
       'POST /api/stats/endorse/:skillId',

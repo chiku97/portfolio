@@ -215,7 +215,7 @@ export default function DeveloperVitalsDock({ onOpenTerminal, onShowToast }) {
               <div className="vital-text">
                 <span className="vital-label font-mono">BACKEND TELEMETRY</span>
                 <span className="vital-value font-mono text-cyan">
-                  {(stats.pageViews || 1420).toLocaleString()} Verified Views • {stats.aiChatsHandled || 156} AI Queries
+                  {(stats.pageViews || 1420).toLocaleString()} Views • {stats.devThoughtsSynced || stats.thoughtSyncCount || 190} Thoughts Synced
                 </span>
               </div>
             </div>

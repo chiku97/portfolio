@@ -1,13 +1,22 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { Sparkles, Terminal, Code2, Cpu, Coffee, Check, ShieldCheck, Heart } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { playClick, playSuccess } from '../utils/audio';
+import { getPortfolioStats, recordThoughtSyncApi } from '../utils/api';
 
 export default function HeroFace({ honestMode, onShowToast }) {
-  const [clickCount, setClickCount] = useState(0);
+  const [clickCount, setClickCount] = useState(190);
   const [thoughtIdx, setThoughtIdx] = useState(0);
   const cardRef = useRef(null);
+
+  useEffect(() => {
+    getPortfolioStats().then(stats => {
+      if (stats?.devThoughtsSynced || stats?.thoughtSyncCount) {
+        setClickCount(stats.devThoughtsSynced || stats.thoughtSyncCount);
+      }
+    }).catch(() => {});
+  }, []);
 
   // 3D Mouse Parallax Physics
   const mouseX = useMotionValue(0);
@@ -64,6 +73,12 @@ export default function HeroFace({ honestMode, onShowToast }) {
     if (onShowToast) {
       onShowToast(honestMode ? "☕ Dev thought synced!" : "💡 Engineering thought synced!");
     }
+
+    recordThoughtSyncApi().then(newCount => {
+      if (typeof newCount === 'number') {
+        setClickCount(newCount);
+      }
+    }).catch(() => {});
   };
 
   return (
@@ -159,7 +174,7 @@ export default function HeroFace({ honestMode, onShowToast }) {
               <span className="status-label">SPECIALTY:</span>
               <span className="status-val">High-Throughput Backends</span>
             </div>
-            <div className="clicks-counter" title="Total clicks on my avatar">
+            <div className="clicks-counter" title="Dev thoughts synced across all visitors">
               <Heart size={11} className="heart-icon text-rose" />
               <span>{clickCount}</span>
             </div>
