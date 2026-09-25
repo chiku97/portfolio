@@ -82,9 +82,8 @@ export default function RagArchitectureDemo() {
         <div className="section-eyebrow">Interactive System Demo</div>
         <h2 className="section-heading">Hybrid RAG & Vector Search Pipeline</h2>
         <p className="section-subtext">
-          A live simulation of the production architecture I built at Sanpbizz CloudTech. 
-          Pure vector search fails on SKU misspellings; pure keyword search fails on conceptual questions. 
-          Select a production trace below to observe how the hybrid pipeline reconciles both:
+          A live simulation of the production architecture I built at SnapBizz CloudTech. 
+          Fusing Elasticsearch BM25 for typo tolerance with PostgreSQL pgvector for semantic search via Reciprocal Rank Fusion (RRF), this system achieved sub-20ms latency across 100,000+ SKUs.
         </p>
 
         {/* Sandbox Panel */}

@@ -37,16 +37,16 @@ export default function InteractiveTerminal({ onShowToast, onOpenFridayDeploy })
 UTTAM KUMAR MAHTO - Full Stack & Backend Systems Engineer
 ========================================================
 📍 Location: Bangalore, Karnataka, India
-💼 Current: Sanpbizz CloudTech Pvt. Ltd. (Full Stack Developer)
+💼 Current: SnapBizz CloudTech Pvt. Ltd. (Full Stack Developer • 1 Mo Notice)
 🎓 Education: MCA (2022, Reva University) | B.Sc IT (2019)
-⚡ Speciality: Scalable Node/React backends, Multi-tenancy,
-             pgvector RAG pipelines, Elasticsearch fuzzy search.
+⚡ Speciality: Scalable Node/React backends, IRCTC Catering Billing Dashboard,
+             sub-20ms Hybrid RAG (pgvector + BM25 RRF across 100,000+ SKUs).
 ☕ Philosophy: If it's not tested and automated, it doesn't exist.`,
 
     skills: `[TECH ARSENAL]
 Languages : JavaScript (ES6+), TypeScript, Ruby, SQL
 Backend   : Node.js, Express.js, Ruby on Rails, REST APIs, RBAC
-AI & RAG  : pgvector, Elasticsearch, Hybrid Rerank, OpenAI/Gemini
+AI & RAG  : pgvector, Elasticsearch BM25, Reciprocal Rank Fusion (RRF), Gemini/OpenAI
 Databases : PostgreSQL, MySQL, Redis, MongoDB
 DevOps    : Docker, AWS (EC2/S3), Drone CI, Jenkins, Nginx
 Testing   : Cypress, Mocha, Chai, Jest, Postman
@@ -54,16 +54,16 @@ Monitoring: Grafana, New Relic`,
 
     "why-hire": `[5 REASONS TO HIRE ME]
 1. Doesn't write 'SELECT *' on tables with 10 million rows.
-2. Built RAG pipelines that actually work in production (hybrid search with pgvector & Elasticsearch).
-3. Handled 10k+ concurrent examinees without server meltdown.
-4. Understands the full stack: from React UI down to SQL queries and Docker containers.
+2. Built production Hybrid RAG (pgvector + Elasticsearch BM25 + RRF) with sub-20ms latency across 100k+ SKUs.
+3. Architected the IRCTC Catering Billing and Management Dashboard with strict multi-tenancy.
+4. Handled 10k+ concurrent examinees without server meltdown.
 5. Has great humor, zero ego, and actually documents code.`,
 
-    "rag-demo": `[RAG PIPELINE FLOW: INVOICE & PRODUCT SEARCH]
+    "rag-demo": `[PRODUCTION HYBRID RAG PIPELINE: 100,000+ SKUs]
 User Query: "Find invoices with misspellings or semantic SKU matches"
- ├── Step 1: Lexical Search -> Elasticsearch (fuzzy matching, fuzziness: AUTO)
- ├── Step 2: Semantic Search -> pgvector cosine similarity via embeddings
- ├── Step 3: Fusion -> Reciprocal Rank Fusion (RRF) reranker
+ ├── Step 1: Lexical Search -> Elasticsearch BM25 (typo tolerance, fuzziness: AUTO)
+ ├── Step 2: Semantic Search -> PostgreSQL pgvector (1536-dim cosine similarity)
+ ├── Step 3: Fusion -> Reciprocal Rank Fusion (RRF) reranker (<20ms latency)
  ├── Step 4: Grounding -> Context injected into OpenAI / Gemini prompt
  └── Output -> 100% grounded response with exact citations & 0 hallucination.`,
 

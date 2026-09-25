@@ -82,7 +82,7 @@ export default function PortfolioWalkthrough({
       content: (
         <div>
           <p className="walkthrough-desc">
-            A live simulation of the production architecture I built at Sanpbizz CloudTech:
+            A live simulation of the production architecture I built at SnapBizz CloudTech (sub-20ms across 100,000+ SKUs):
           </p>
           <ul className="walkthrough-checklist">
             <li><strong>Elasticsearch BM25:</strong> Solves cashier typos (e.g. "paracetmol 50mg" → "Paracetamol 500mg").</li>

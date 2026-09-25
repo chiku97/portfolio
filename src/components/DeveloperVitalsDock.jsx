@@ -187,7 +187,7 @@ export default function DeveloperVitalsDock({ onOpenTerminal, onShowToast }) {
               <Zap size={15} className="text-emerald" />
               <div className="vital-text">
                 <span className="vital-label font-mono">CURRENT FOCUS</span>
-                <span className="vital-value">pgvector HNSW tuning &amp; 10k QPS pipelines</span>
+                <span className="vital-value">IRCTC Catering Billing &amp; sub-20ms Hybrid RAG</span>
               </div>
             </div>
 
@@ -205,7 +205,7 @@ export default function DeveloperVitalsDock({ onOpenTerminal, onShowToast }) {
               <GitBranch size={15} className="text-blue" />
               <div className="vital-text">
                 <span className="vital-label font-mono">AVAILABILITY</span>
-                <span className="vital-value text-emerald">Open to Full Stack &amp; Backend Engineering Roles</span>
+                <span className="vital-value text-emerald">Currently at SnapBizz (1 Mo Notice) • Open to BLR / Remote</span>
               </div>
             </div>
 

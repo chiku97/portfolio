@@ -7,12 +7,12 @@ export const personalInfo = {
   linkedin: "https://www.linkedin.com/in/uttam-kumar-mahto-b160bb197/",
   github: "https://github.com/chiku97",
   status: {
-    honest: "⚡ Available for hire (willing to trade clean SQL indexes and memory leak extermination for money & zero-meeting Thursdays)",
-    pro: "● Available for Full-Time High-Impact Roles in Bangalore / Remote"
+    honest: "⚡ Currently at SnapBizz CloudTech (1 Month Notice Period) — open for high-impact backend & full-stack roles in Bangalore or remote",
+    pro: "● Currently at SnapBizz CloudTech • 1 Month Notice Period • Open to Full-Time Roles (Bangalore / Remote)"
   },
   bio: {
-    honest: "Full Stack Engineer with 3+ years of turning espresso into pull requests, untangling 4,000-line legacy Node.js files, and diplomatically explaining to PMs why 'just asking ChatGPT to build it' won't solve our multi-tenant race conditions. I specialize in backend architectures that survive real human chaos, unindexed 10-million-row queries, and that one developer who pushes directly to main because 'it worked fine on my MacBook'.",
-    pro: "Backend-Focused Full Stack Engineer with 3+ years of experience designing and developing scalable, high-performance web applications across Healthcare, EdTech, and RetailTech domains. Strong expertise in Node.js, Express.js, React.js, Ruby on Rails, PostgreSQL, MySQL, Redis, Elasticsearch, Docker, AWS, and CI/CD. Hands-on experience building multi-tenant architectures, high-concurrency assessment platforms, and production RAG pipelines with pgvector, Elasticsearch hybrid search, and OpenAI/Gemini LLMs."
+    honest: "Full Stack Engineer currently at SnapBizz CloudTech (1 month notice) with 3+ years of turning espresso into pull requests, untangling 4,000-line legacy Node.js files, and diplomatically explaining why 'just asking ChatGPT' won't solve multi-tenant race conditions. I specialize in backend architectures that survive real human chaos, unindexed 10-million-row queries, and that one developer who pushes directly to main because 'it worked fine on my MacBook'.",
+    pro: "Backend-Focused Full Stack Engineer with 3+ years of experience designing and developing scalable, high-performance web applications across Healthcare, EdTech, and RetailTech domains. Strong expertise in Node.js, Express.js, React.js, Go, Ruby on Rails, PostgreSQL, MySQL, Redis, Elasticsearch, Docker, AWS, and CI/CD. Currently at SnapBizz CloudTech architecting the IRCTC Catering Billing and Management Dashboard and a production Hybrid RAG search engine (BM25 + pgvector + RRF) running sub-20ms across 100,000+ SKUs."
   },
   engineeringTruth: {
     honest: "Every modern distributed system is basically two rubber bands, a Redis cache praying for dear life, and a cron job that nobody remembers who wrote. 95% of production downtime isn't complex algorithms — it's someone pushing at 4:59 PM on Friday because 'it's just a one-line config change'.",
@@ -21,25 +21,33 @@ export const personalInfo = {
   stats: [
     { label: "Production Experience", value: "3+ Years", detail: "RetailTech, EdTech & Healthcare" },
     { label: "Concurrent Examinees Handled", value: "10,000+", detail: "Real-time evaluation sandboxes" },
-    { label: "Search & Database Response", value: "<50ms", detail: "Redis caching & Elasticsearch tuning" },
-    { label: "Production RAG Pipelines", value: "Hybrid", detail: "pgvector + BM25 fuzzy matching" }
+    { label: "Search & Database Response", value: "Sub-20ms", detail: "Elasticsearch BM25 + pgvector (RRF) across 100k+ SKUs" },
+    { label: "Production RAG Pipelines", value: "Hybrid RRF", detail: "Elasticsearch BM25 + PostgreSQL pgvector" }
   ]
 };
 
 export const experiences = [
   {
     id: "snapbizz",
-    company: "Sanpbizz CloudTech Pvt. Ltd.",
+    company: "SnapBizz CloudTech Pvt. Ltd.",
     role: "Full Stack Developer",
     period: "Feb 2026 – Present",
     location: "Bangalore, Karnataka",
-    badge: "Current",
-    platform: "Retailer & Warehouse Management Platform",
+    badge: "Current (1 Mo Notice)",
+    platform: "IRCTC Catering Billing Dashboard & Retail Platform",
     overview: {
-      honest: "Currently keeping hundreds of retail stores and warehouses running while store owners scan barcodes at the speed of sound and try to inventory 400 different brands of instant noodles. Also glued an LLM to PostgreSQL so executives stop asking engineers for custom CSV exports every Monday morning.",
-      pro: "Architecting backend microservices, inventory reconciliation pipelines, Elasticsearch fuzzy search, and conversational RAG systems for retail and warehouse networks with tier-1 enterprise clients including IRCTC and Axis Bank."
+      honest: "Currently at SnapBizz CloudTech with a 1-month notice period. Architected the IRCTC Catering Billing and Management Dashboard, multi-tenant inventory reconciliation microservices, and a production Hybrid RAG search engine (BM25 + pgvector + RRF) delivering sub-20ms latency across 100,000+ SKUs.",
+      pro: "Architecting the IRCTC Catering Billing & Management Dashboard alongside retail warehouse microservices. Engineered a production Hybrid RAG and Vector search pipeline fusing Elasticsearch BM25 and PostgreSQL pgvector (RRF) with sub-20ms latency across 100,000+ SKUs."
     },
     bulletPoints: [
+      {
+        honest: "Architected and built the IRCTC Catering Billing and Management Dashboard, handling high-frequency transactions and billing flows without race conditions.",
+        pro: "Architected and built the IRCTC Catering Billing and Management Dashboard, managing high-frequency transactions, billing automation, and multi-tenant inventory reconciliation."
+      },
+      {
+        honest: "Engineered production Hybrid RAG search combining Elasticsearch BM25 (typo tolerance) with PostgreSQL pgvector (semantic search) via Reciprocal Rank Fusion (RRF) — sub-20ms across 100,000+ SKUs.",
+        pro: "Engineered a production Hybrid RAG (Retrieval Augmented Generation) and Vector search pipeline fusing Elasticsearch BM25 for typo tolerance with PostgreSQL pgvector for semantic search, utilizing Reciprocal Rank Fusion (RRF) to achieve sub-20ms latency across 100,000+ SKUs."
+      },
       {
         honest: "Wrote Node.js backend microservices capable of surviving erratic warehouse WiFi that drops packets whenever someone turns on a microwave.",
         pro: "Designed and developed scalable Node.js and Express.js backend services handling inventory tracking, multi-warehouse transfers, and high-frequency stock reconciliation."
@@ -49,16 +57,8 @@ export const experiences = [
         pro: "Implemented strict multi-tenant architecture with isolated tenant schemas and Role-Based Access Control (RBAC) ensuring enterprise clients like IRCTC and Axis Bank never leak cross-tenant data."
       },
       {
-        honest: "Built Elasticsearch fuzzy search because cashiers type SKU names like their keyboards owe them money (yes, 'prctml 50mg' still correctly finds Paracetamol 500mg).",
-        pro: "Engineered an Elasticsearch-based product search with fuzziness: AUTO and custom field boosting, resolving severe user typo issues and partial SKU lookups."
-      },
-      {
         honest: "Inserted Redis between our API and MySQL so our database doesn't spontaneously combust every time nationwide flash deals or mass stock reconciliations trigger.",
         pro: "Built a Redis caching layer for hot inventory tables and catalog lookups, cutting repeated MySQL database queries and sustaining peak transactional traffic."
-      },
-      {
-        honest: "Integrated pgvector embeddings into PostgreSQL so store owners can ask 'which snacks sold out during the cricket match?' instead of filing 42 support tickets.",
-        pro: "Architected a production RAG (Retrieval-Augmented Generation) pipeline combining PostgreSQL/pgvector semantic vector embeddings with Elasticsearch lexical search for conversational invoice analytics."
       },
       {
         honest: "Banished the sacred developer excuse 'well, it worked fine on my machine' by wrapping everything in Docker and deploying cleanly to AWS.",
@@ -141,13 +141,13 @@ export const experiences = [
 export const projects = [
   {
     id: "rag-analytics-chatbot",
-    title: "RAG-Powered Invoice & Product Analytics Chatbot",
-    subtitle: "Hybrid Lexical (Elasticsearch) + Semantic (pgvector) Retrieval",
+    title: "Production Hybrid RAG & Vector Search Pipeline",
+    subtitle: "Elasticsearch BM25 + PostgreSQL pgvector via Reciprocal Rank Fusion (RRF)",
     category: "AI & Search",
     featured: true,
     summary: {
-      honest: "Because store managers hate looking at spreadsheet formulas. Combines fuzzy search for when humans spell 'Colgate' as 'Kolgate' with vector search for conceptual queries like 'frequently returned perishable dairy products'.",
-      pro: "Built an enterprise retrieval-augmented generation (RAG) system allowing store managers and accounting teams to query millions of invoices and product SKUs using natural language. Employs hybrid search to handle both lexical typos and conceptual queries."
+      honest: "Engineered at SnapBizz CloudTech. Fuses Elasticsearch BM25 for typo tolerance with PostgreSQL pgvector for semantic search using Reciprocal Rank Fusion (RRF) to achieve sub-20ms latency across 100,000+ SKUs.",
+      pro: "Engineered a production Hybrid RAG (Retrieval Augmented Generation) and Vector search pipeline at SnapBizz CloudTech. Fused Elasticsearch BM25 for typo tolerance with PostgreSQL pgvector for semantic search, utilizing Reciprocal Rank Fusion (RRF) to achieve sub-20ms latency across 100,000+ SKUs."
     },
     problemStatement: "Pure LLMs hallucinate numbers and have strict token context limits. Pure vector search misses exact SKU codes and misspelled brand names. Pure keyword search fails on conceptual questions like 'which items have had high return trends?'.",
     architectureSteps: [
@@ -156,7 +156,7 @@ export const projects = [
       { step: "Reciprocal Rank Fusion (RRF)", detail: "Normalizes and fuses both ranking lists into a single deduplicated candidate context." },
       { step: "Grounded Synthesis", detail: "Injects verified invoice rows and SKU facts into the LLM system prompt with strict schema enforcement." }
     ],
-    metrics: "Sub-100ms retrieval, zero hallucinated totals, verified audit trail.",
+    metrics: "Sub-20ms latency across 100,000+ SKUs, Reciprocal Rank Fusion (RRF), zero hallucinations.",
     techStack: ["Node.js", "Express.js", "PostgreSQL", "pgvector", "Elasticsearch", "Redis", "OpenAI / Gemini API", "Docker"],
     githubUrl: "https://github.com/chiku97"
   },
@@ -183,13 +183,13 @@ export const projects = [
   },
   {
     id: "multi-tenant-retail-engine",
-    title: "Multi-Tenant Retail & Warehouse Management Core",
-    subtitle: "Supply Chain & Order Lifecycle Engine (IRCTC & Axis Bank)",
+    title: "IRCTC Catering Billing & Multi-Tenant Retail Engine",
+    subtitle: "High-Frequency Catering Billing & Order Lifecycle Core (IRCTC & Axis Bank)",
     category: "Backend Architecture",
     featured: true,
     summary: {
-      honest: "The engine that keeps track of what is on which shelf in which warehouse across India, making sure IRCTC retail outlets don't sell bottles of water that don't exist.",
-      pro: "Designed the transactional core for stock reconciliation, multi-warehouse inventory dispatch, and retailer operations. Implemented row-level security and strict tenant boundaries for national enterprise clients."
+      honest: "Architected the IRCTC Catering Billing and Management Dashboard and multi-tenant retail engine. Guarantees real-time billing and inventory dispatch while keeping Indian Railways data strictly isolated.",
+      pro: "Architected and built the IRCTC Catering Billing and Management Dashboard and multi-tenant transactional core. Implemented row-level security and strict tenant isolation for high-volume enterprise operations."
     },
     problemStatement: "Supporting multiple enterprise brands in a shared infrastructure requires absolute data isolation, zero cross-tenant query leaks, and race-condition-free stock reservations during high-volume purchasing.",
     architectureSteps: [

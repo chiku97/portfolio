@@ -113,14 +113,14 @@ function addExperience(role, company, date, bullets) {
 }
 
 addExperience(
-  'Full Stack Developer',
-  'Sanpbizz CloudTech Pvt. Ltd. (Bangalore)',
+  'Full Stack Developer (1 Mo Notice)',
+  'SnapBizz CloudTech Pvt. Ltd. (Bangalore)',
   'Feb 2026 – Present',
   [
+    'Architected and built the IRCTC Catering Billing and Management Dashboard, managing high-frequency transactions and multi-tenant inventory reconciliation.',
+    'Engineered production Hybrid RAG & Vector search pipeline fusing Elasticsearch BM25 and PostgreSQL pgvector (RRF) with sub-20ms latency across 100,000+ SKUs.',
     'Designed and developed scalable Node.js & Express.js backend services handling multi-warehouse transfers and high-frequency stock reconciliation.',
-    'Implemented multi-tenant architectures with isolated tenant schemas and RBAC, ensuring enterprise clients like IRCTC and Axis Bank never leak cross-tenant data.',
-    'Engineered an Elasticsearch-based product search with fuzziness: AUTO and custom field boosting, resolving user typo issues across millions of retail SKUs.',
-    'Pioneered internal RAG pipeline leveraging pgvector and OpenAI embeddings for automated invoice insights and natural language stock queries.'
+    'Implemented multi-tenant architectures with isolated tenant schemas and RBAC, ensuring enterprise clients like IRCTC and Axis Bank never leak cross-tenant data.'
   ]
 );
 

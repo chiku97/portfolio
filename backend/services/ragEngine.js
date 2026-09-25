@@ -7,7 +7,7 @@ export const CANDIDATE_PROFILE = {
   role: "Full Stack & Backend Systems Engineer",
   experienceYears: "3+ Years",
   location: "Bangalore, Karnataka, India",
-  availability: "Immediately available for full-time backend or full-stack software engineering roles (Bangalore or Remote)",
+  availability: "Currently working at SnapBizz CloudTech Pvt. Ltd. with a 1-month notice period; actively seeking opportunities for full-time backend or full-stack software engineering roles in Bangalore or Remote.",
   contact: {
     email: "uttamkumar9708@gmail.com",
     phone: "+91-8147747120",
@@ -33,10 +33,10 @@ export const CANDIDATE_PROFILE = {
       period: "Feb 2026 – Present",
       location: "Bangalore",
       highlights: [
-        "Architected backend microservices and inventory reconciliation pipelines across retail and warehouse networks.",
-        "Integrated IRCTC ticketing systems via WhatsApp automation with strict multi-tenant schema partitioning.",
-        "Engineered production Hybrid RAG & Vector search fusing Elasticsearch BM25 (typo tolerance) and PostgreSQL pgvector (semantic search) using Reciprocal Rank Fusion (RRF) with sub-20ms latency across 100,000+ SKUs.",
-        "Implemented Redis caching layer for hot inventory tables, sustaining peak nationwide flash transactions."
+        "Architected and built the IRCTC Catering Billing and Management Dashboard, powering high-frequency transactions, billing automation, and multi-tenant inventory reconciliation.",
+        "Engineered production Hybrid RAG (Retrieval Augmented Generation) and Vector search pipeline fusing Elasticsearch BM25 (typo tolerance) and PostgreSQL pgvector (semantic search) utilizing Reciprocal Rank Fusion (RRF), achieving sub-20ms latency across 100,000+ SKUs.",
+        "Architected backend microservices and inventory reconciliation pipelines across retail and warehouse networks with Redis caching layer sustaining peak nationwide flash transactions.",
+        "Enforced strict multi-tenant schema partitioning and RBAC ensuring enterprise clients like IRCTC and Axis Bank never leak cross-tenant data."
       ]
     },
     {
@@ -172,13 +172,38 @@ function generateDynamicResponse(query, honestMode) {
     };
   }
 
-  // B. Location / Availability / Notice Period
-  if (q.includes('location') || q.includes('city') || q.includes('notice') || q.includes('availability') || q.includes('immediate') || q.includes('join') || q.includes('relocate') || q.includes('remote')) {
+  // B. Current Employment / Notice Period / Availability / Location
+  if (
+    q.includes('cureently') || q.includes('currently') || q.includes('working') ||
+    q.includes('current company') || q.includes('current role') || q.includes('job') ||
+    q.includes('notice') || q.includes('availability') || q.includes('immediate') ||
+    q.includes('join') || q.includes('relocate') || q.includes('remote') || q.includes('location') || q.includes('city')
+  ) {
     return {
       text: honestMode
-        ? `Uttam is based in Bangalore, India and is available right now for high-impact full-stack and backend roles (Bangalore or remote). No 90-day corporate notice delays.`
-        : `Uttam is based in Bangalore, Karnataka, India and is open to in-office, hybrid, or remote engineering positions. He is immediately available to join a high-impact engineering team.`,
-      sources: ["Availability & Logistics"]
+        ? `Yes, Uttam is currently working as a Full Stack Developer at SnapBizz CloudTech Pvt. Ltd. with a standard 1-month notice period. He is actively seeking high-impact full-time backend or full-stack software engineering roles in Bangalore or remote, and can transition cleanly without corporate 90-day delays.`
+        : `Yes, Uttam is currently working as a Full Stack Developer at SnapBizz CloudTech Pvt. Ltd. He has a 1-month notice period and is actively seeking full-time backend or full-stack software engineering roles in Bangalore or for remote work.`,
+      sources: ["Current Employment & Availability"]
+    };
+  }
+
+  // B2. IRCTC Catering Billing & Management Dashboard
+  if (q.includes('irctc') || q.includes('catering') || q.includes('billing')) {
+    return {
+      text: honestMode
+        ? `At SnapBizz CloudTech, Uttam architected and built the IRCTC Catering Billing and Management Dashboard. It orchestrates high-frequency billing transactions, inventory reconciliation, and strict multi-tenant schema partitioning so Indian Railways data never collides with third-party vendors.`
+        : `At SnapBizz CloudTech, Uttam architected and engineered the IRCTC Catering Billing and Management Dashboard. The platform manages high-frequency billing operations, multi-tenant inventory reconciliation, and role-based access control under strict enterprise SLAs.`,
+      sources: ["SnapBizz CloudTech: IRCTC Dashboard"]
+    };
+  }
+
+  // B3. Hybrid RAG & Vector Search Pipeline (BM25 + pgvector + RRF)
+  if (q.includes('rag') || q.includes('rrf') || q.includes('reciprocal') || q.includes('bm25') || q.includes('pgvector') || q.includes('100,000') || q.includes('100k') || q.includes('sku') || q.includes('sub-20ms') || q.includes('vector search')) {
+    return {
+      text: honestMode
+        ? `Uttam engineered a production Hybrid RAG and Vector search pipeline at SnapBizz CloudTech. By fusing Elasticsearch BM25 (typo tolerance for erratic SKU entries) with PostgreSQL pgvector (semantic search) via Reciprocal Rank Fusion (RRF), the system achieves sub-20ms latency across 100,000+ SKUs.`
+        : `Uttam engineered a production Hybrid RAG (Retrieval Augmented Generation) and Vector search pipeline at SnapBizz CloudTech. This system fused Elasticsearch BM25 for typo tolerance with PostgreSQL pgvector for semantic search, utilizing Reciprocal Rank Fusion (RRF). It achieved sub-20ms latency across 100,000+ SKUs, demonstrating his ability to build high-performance, intelligent search systems.`,
+      sources: ["SnapBizz CloudTech: Production Hybrid RAG"]
     };
   }
 
@@ -278,10 +303,11 @@ ${context}
 
 CRITICAL REASONING RULES:
 1. ALWAYS answer the user's specific question directly in the very first sentence.
-2. If the user asks whether Uttam knows or works with a technology that is NOT in his core stack (e.g. Spring Boot, C#, PHP, Swift), clearly state that he does not specialize in it in his production work, and mention his relevant core backend tools (Node.js, Go, PostgreSQL). Never pretend he has experience in tools he doesn't list.
-3. If asked about his projects or scale, cite real metrics from the context (e.g. 10,000 concurrent students, 3.2ms covering indexes, 100k+ SKUs hybrid RAG).
-4. Tone: ${honestMode ? "BRUTALLY HONEST, witty, pragmatic engineering mindset" : "PROFESSIONAL, precise, and technically grounded"}.
-5. Keep your response under 120 words. No robotic fluff.`;
+2. If asked if Uttam is currently working or his notice period: State clearly that he is currently working as a Full Stack Developer at SnapBizz CloudTech Pvt. Ltd. with a 1-month notice period, and is actively seeking full-time backend or full-stack engineering opportunities in Bangalore or Remote.
+3. If asked about his projects at SnapBizz: Highlight the IRCTC Catering Billing and Management Dashboard and the production Hybrid RAG pipeline (Elasticsearch BM25 + PostgreSQL pgvector with Reciprocal Rank Fusion, sub-20ms across 100,000+ SKUs).
+4. If the user asks whether Uttam knows or works with a technology that is NOT in his core stack (e.g. Spring Boot, C#, PHP, Swift), clearly state that he does not specialize in it in his production work, and mention his relevant core backend tools (Node.js, Go, PostgreSQL). Never pretend he has experience in tools he doesn't list.
+5. Tone: ${honestMode ? "BRUTALLY HONEST, witty, pragmatic engineering mindset" : "PROFESSIONAL, precise, and technically grounded"}.
+6. Keep your response under 120 words. No robotic fluff.`;
 
   const contents = [];
   for (const h of history.slice(-4)) {
